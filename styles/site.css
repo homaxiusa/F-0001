@@ -148,11 +148,21 @@
 
 /* 主内容布局 */
 .main-content {
-    display: grid;
-    grid-template-columns: 300px 1fr 300px;
-    gap: 15px;
-    padding: 15px;
-    background-color: #f8fafc;
+    padding: 1rem;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.primary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 /* 站点信息样式 */
@@ -344,5 +354,121 @@
     .floor-plan,
     .tools-history {
         margin-bottom: 15px;
+    }
+}
+
+/* 响应式布局 */
+@media screen and (min-width: 768px) {
+    .content-wrapper {
+        flex-direction: row;
+    }
+
+    .primary-content {
+        flex: 1;
+        flex-direction: row;
+    }
+
+    .site-overview {
+        width: 300px;
+        min-width: 300px;
+    }
+
+    .floor-plan {
+        flex: 1;
+    }
+
+    .tools-history {
+        width: 300px;
+        min-width: 300px;
+    }
+}
+
+/* 站点信息响应式 */
+@media screen and (max-width: 767px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .info-group {
+        padding: 1rem;
+    }
+
+    .info-item {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
+
+/* 平面图响应式 */
+.floor-plan-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%; /* 根据实际图片比例调整 */
+}
+
+.floor-plan-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 图例响应式 */
+@media screen and (max-width: 767px) {
+    .floor-plan-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .floor-plan-legend {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+}
+
+/* RMU 标记响应式 */
+@media (hover: none) {
+    .rmu-marker {
+        min-width: 24px;
+        min-height: 24px;
+    }
+
+    .rmu-tooltip {
+        display: none;
+    }
+
+    .rmu-marker:active .rmu-tooltip {
+        display: block;
+    }
+}
+
+/* 工具按钮响应式 */
+@media screen and (max-width: 767px) {
+    .tools-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .tool-btn {
+        width: 100%;
+        padding: 0.75rem;
+    }
+}
+
+/* 历史记录响应式 */
+@media screen and (max-width: 767px) {
+    .history-item {
+        padding: 0.75rem;
+    }
+
+    .history-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
     }
 }
