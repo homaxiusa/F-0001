@@ -49,11 +49,21 @@
 
 /* Main content layout */
 .main-content {
-    display: grid;
-    grid-template-columns: 220px 1fr 300px;
-    gap: 15px;
-    padding: 15px;
-    background-color: #f8fafc;
+    padding: 1rem;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.primary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 /* Map container styles */
@@ -355,4 +365,127 @@
 
 .nav-link.active {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 响应式布局 */
+@media screen and (min-width: 768px) {
+    .content-wrapper {
+        flex-direction: row;
+    }
+
+    .primary-content {
+        flex: 1;
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        min-width: 250px;
+    }
+
+    .map-container {
+        flex: 1;
+    }
+
+    .right-panel {
+        width: 300px;
+        min-width: 300px;
+    }
+}
+
+/* 头部响应式样式 */
+@media screen and (max-width: 767px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .header-logo {
+        margin-bottom: 1rem;
+    }
+
+    .header-right {
+        margin-top: 1rem;
+    }
+
+    /* 导航栏响应式 */
+    .nav-list {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-item {
+        flex: 1 1 auto;
+        text-align: center;
+        min-width: 120px;
+    }
+}
+
+/* 搜索区域响应式 */
+@media screen and (max-width: 767px) {
+    .search-container {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .filter-item {
+        width: 100%;
+    }
+}
+
+/* 地图响应式 */
+.map {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 60%; /* 保持地图的宽高比 */
+}
+
+.map-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 警报列表响应式 */
+@media screen and (max-width: 767px) {
+    .alert-item {
+        flex-direction: column;
+        padding: 0.5rem;
+    }
+
+    .alert-time {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) {
+    .marker {
+        min-width: 24px;
+        min-height: 24px;
+    }
+
+    .marker-tooltip {
+        display: none;
+    }
+
+    .marker:active .marker-tooltip {
+        display: block;
+    }
+
+    .nav-link {
+        padding: 1rem;
+    }
+
+    select, button {
+        min-height: 44px; /* 更好的触摸目标大小 */
+    }
 } 
