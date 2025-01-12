@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top-Level Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-logo">
+            <img src="images/logo.png" alt="FOS" width="80" height="40">
+        </div>
+        <div class="header-center">
+            <h1>Facility Operation Services</h1>
+            <p>Your Trusted Remote Monitoring Solution</p>
+        </div>
+        <div class="header-right">
+            <span>Welcome, John Doe</span>
+            <button class="sign-out-btn">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- 在 header 和 main-content 之间添加导航栏 -->
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="dashboard0.html" class="nav-link active">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="site11.html" class="nav-link">Sites</a>
+            </li>
+            <li class="nav-item">
+                <a href="rmu-001.html" class="nav-link">RMUs</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Devices</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="overview-section customer-overview">
+                <h3>Customer Overview</h3>
+                <div class="stats">
+                    <p class="total-row">Total: <strong>1,000</strong></p>
+                    <p class="detail-row">Active: <strong>850</strong> Inactive: <strong>150</strong></p>
+                </div>
+            </div>
+
+            <div class="overview-section site-overview">
+                <h3>Site Overview</h3>
+                <div class="stats">
+                    <p class="total-row">Total: <strong>3,000</strong></p>
+                    <p class="detail-row">Active: <strong>2,500</strong> Inactive: <strong>500</strong></p>
+                </div>
+            </div>
+
+            <div class="overview-section rmu-overview">
+                <h3>RMU Overview</h3>
+                <div class="stats">
+                    <p class="total-row">Total: <strong>5,000</strong></p>
+                    <p class="detail-row">Operational: <strong>4,500</strong> Faulty: <strong>500</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Map and Search -->
+        <div class="map-container">
+            <div class="search">
+                <div class="search-container">
+                    <div class="search-input">
+                        <input type="text" 
+                               aria-label="Search" 
+                               placeholder="Search by customer name, site name, or RMU ID...">
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-item">
+                            <label>Status</label>
+                            <select>
+                                <option value="">All Status</option>
+                                <option value="operational">Operational</option>
+                                <option value="faulty">Faulty</option>
+                                <option value="relocation">Pending Relocation</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>Region</label>
+                            <select>
+                                <option value="">All Regions</option>
+                                <option value="North">North</option>
+                                <option value="South">South</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>State</label>
+                            <select>
+                                <option value="">All States</option>
+                                <option value="CA">California</option>
+                                <option value="NY">New York</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>City</label>
+                            <select>
+                                <option value="">All Cities</option>
+                                <option value="Los Angeles">Los Angeles</option>
+                                <option value="New York">New York</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <img src="images/usa-map.png" alt="USA Map" class="map-image">
+                <div class="markers-container">
+                    <!-- 东北部标记点 -->
+                    <a href="rmu-001.html" class="marker operational" style="top: 22%; left: 83%;" title="Boston, MA">
+                        <span class="marker-tooltip">Boston, MA</span>
+                    </a>
+                    <div class="marker operational" style="top: 24%; left: 82%;" title="New York, NY">
+                        <span class="marker-tooltip">New York, NY</span>
+                    </div>
+                    
+                    <!-- 中大西洋标记点 -->
+                    <div class="marker error" style="top: 28%; left: 79%;" title="Pittsburgh, PA">
+                        <span class="marker-tooltip">Pittsburgh, PA</span>
+                    </div>
+                    <div class="marker warning" style="top: 32%; left: 77%;" title="Virginia">
+                        <span class="marker-tooltip">Virginia</span>
+                    </div>
+                    
+                    <!-- 东南部标记点 -->
+                    <div class="marker operational" style="top: 42%; left: 76%;" title="North Carolina">
+                        <span class="marker-tooltip">North Carolina</span>
+                    </div>
+                    <div class="marker operational" style="top: 45%; left: 73%;" title="Georgia">
+                        <span class="marker-tooltip">Georgia</span>
+                    </div>
+                    <div class="marker error" style="top: 55%; left: 82%;" title="Florida">
+                        <span class="marker-tooltip">Florida</span>
+                    </div>
+                    
+                    <!-- 中西部标记点 -->
+                    <div class="marker error" style="top: 32%; left: 65%;" title="Illinois">
+                        <span class="marker-tooltip">Illinois</span>
+                    </div>
+                    <div class="marker operational" style="top: 35%; left: 63%;" title="Missouri">
+                        <span class="marker-tooltip">Missouri</span>
+                    </div>
+                    <div class="marker operational" style="top: 40%; left: 67%;" title="Tennessee">
+                        <span class="marker-tooltip">Tennessee</span>
+                    </div>
+                    
+                    <!-- 中南部标记点 -->
+                    <div class="marker operational" style="top: 45%; left: 60%;" title="Arkansas">
+                        <span class="marker-tooltip">Arkansas</span>
+                    </div>
+                    <div class="marker error" style="top: 48%; left: 62%;" title="Mississippi">
+                        <span class="marker-tooltip">Mississippi</span>
+                    </div>
+                    
+                    <!-- 大平原标记点 -->
+                    <div class="marker warning" style="top: 35%; left: 52%;" title="Kansas">
+                        <span class="marker-tooltip">Kansas</span>
+                    </div>
+                    <div class="marker operational" style="top: 40%; left: 45%;" title="Colorado">
+                        <span class="marker-tooltip">Colorado</span>
+                    </div>
+                    
+                    <!-- 西部标记点 -->
+                    <div class="marker operational" style="top: 18%; left: 12%;" title="Washington">
+                        <span class="marker-tooltip">Washington</span>
+                    </div>
+                    <div class="marker operational" style="top: 25%; left: 13%;" title="Oregon">
+                        <span class="marker-tooltip">Oregon</span>
+                    </div>
+                    <div class="marker operational" style="top: 35%; left: 8%;" title="California North">
+                        <span class="marker-tooltip">California North</span>
+                    </div>
+                    <div class="marker error" style="top: 40%; left: 10%;" title="California South">
+                        <span class="marker-tooltip">California South</span>
+                    </div>
+                    <div class="marker error" style="top: 42%; left: 18%;" title="Arizona">
+                        <span class="marker-tooltip">Arizona</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="alerts-header">
+                <h3>Site Alerts</h3>
+                <div class="time-filter">
+                    <select>
+                        <option value="1d">Last 24 Hours</option>
+                        <option value="7d">Last 7 Days</option>
+                        <option value="15d">Last 15 Days</option>
+                        <option value="1m">Last Month</option>
+                        <option value="3m">Last 3 Months</option>
+                        <option value="ytd">Year to Date</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
+            </div>
+            <ul class="alert-list">
+                <li class="alert-item">
+                    <div class="alert-time">2024-12-29 10:15:00</div>
+                    <div class="alert-content">
+                        <div class="alert-site">SiteID: 385-004, RMU: 15</div>
+                        <div class="alert-message">Solar Controller Malfunction</div>
+                    </div>
+                </li>
+                <li class="alert-item">
+                    <div class="alert-time">2024-12-29 10:08:00</div>
+                    <div class="alert-content">
+                        <div class="alert-site">SiteID: 247-005, RMU: 21</div>
+                        <div class="alert-message">4G Router Connection Lost</div>
+                    </div>
+                </li>
+                <li class="alert-item">
+                    <div class="alert-time">2024-12-29 10:03:00</div>
+                    <div class="alert-content">
+                        <div class="alert-site">SiteID: 156-006, RMU: 18</div>
+                        <div class="alert-message">POE Switch Failure</div>
+                    </div>
+                </li>
+                <li class="alert-item">
+                    <div class="alert-time">2024-12-29 10:00:00</div>
+                    <div class="alert-content">
+                        <div class="alert-site">SiteID: 472-001, RMU: 03</div>
+                        <div class="alert-message">Storage Failure Detected</div>
+                    </div>
+                </li>
+                <li class="alert-item">
+                    <div class="alert-time">2024-12-29 09:45:00</div>
+                    <div class="alert-content">
+                        <div class="alert-site">SiteID: 293-002, RMU: 07</div>
+                        <div class="alert-message">Device Offline</div>
+                    </div>
+                </li>
+                <li class="alert-item">
+                    <div class="alert-time">2024-12-29 09:30:00</div>
+                    <div class="alert-content">
+                        <div class="alert-site">SiteID: 138-003, RMU: 12</div>
+                        <div class="alert-message">Customer Requested Relocation</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 FOS Company. All rights reserved.</p>
+        <p class="footer-powered">Powered by Homaxi Inc</p>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

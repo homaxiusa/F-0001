@@ -1,0 +1,168 @@
+:root {
+    /* Color variables */
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #64748b;
+    --background-color: #f8fafc;
+    --surface-color: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8fafc;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    align-items: center;
+}
+
+.header-logo img {
+    height: 40px;
+    width: auto;
+}
+
+.header-center {
+    text-align: center;
+}
+
+.header-center h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1e293b;
+}
+
+.header-center p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.sign-out-btn {
+    padding: 6px 12px;
+    border: 1px solid #2563eb;
+    border-radius: 4px;
+    background: transparent;
+    color: #2563eb;
+    cursor: pointer;
+}
+
+.sign-out-btn:hover {
+    background: #2563eb;
+    color: white;
+}
+
+/* Common button styles */
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.status-warning {
+    background-color: var(--warning-color);
+    color: white;
+}
+
+.status-error {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.footer {
+    margin-top: auto;
+    padding: 15px 20px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* 导航栏样式 */
+.nav-bar {
+    background-color: #2563eb;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 2px;
+}
+
+.nav-item {
+    border-right: none;
+}
+
+.nav-link {
+    display: block;
+    padding: 8px 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: none;
+} 

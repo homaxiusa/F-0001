@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMU-001 Details - FOS</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/rmu-001.css">
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-logo">
+            <img src="images/logo.png" alt="FOS" width="80" height="40">
+        </div>
+        <div class="header-center">
+            <h1>Facility Operation Services</h1>
+            <p>Your Trusted Remote Monitoring Solution</p>
+        </div>
+        <div class="header-right">
+            <span>Welcome, John Doe</span>
+            <button class="sign-out-btn">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="dashboard0.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="site11.html" class="nav-link">Sites</a>
+            </li>
+            <li class="nav-item">
+                <a href="rmu-001.html" class="nav-link active">RMUs</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Devices</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="page-container">
+        <div class="content-wrapper">
+            <!-- 三栏布局容器 -->
+            <div class="three-column-layout">
+                <!-- 左侧：RMU 列表 -->
+                <div class="rmu-list-panel">
+                    <div class="section-block">
+                        <div class="section-header">
+                            <h3>Site Information</h3>
+                        </div>
+                        <div class="site-info">
+                            <div class="info-row">
+                                <label>Site Name:</label>
+                                <span>Northeastern Distribution Facility</span>
+                            </div>
+                            <div class="info-row">
+                                <label>Address:</label>
+                                <span>123 Industrial Park Road</span>
+                            </div>
+                            <div class="info-row">
+                                <label>Total RMUs:</label>
+                                <span>3 Units</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <div class="section-header">
+                            <h3>Location on Site Map</h3>
+                        </div>
+                        <div class="site-map-preview">
+                            <div class="map-container">
+                                <img src="images/site-001.jpg" alt="Site Map" class="site-map">
+                                <div class="rmu-marker active status-normal" style="left: 45%; top: 30%;">
+                                    <span class="marker-label">RMU-001</span>
+                                </div>
+                                <div class="rmu-marker status-warning" style="left: 65%; top: 45%;">
+                                    <span class="marker-label">RMU-002</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <div class="section-header">
+                            <h3>RMU List</h3>
+                        </div>
+                        <div class="rmu-list">
+                            <div class="rmu-item active">
+                                <div class="rmu-item-header">
+                                    <span class="rmu-name">RMU-001</span>
+                                    <div class="rmu-status">
+                                        <span class="status-text success">Normal</span>
+                                        <span class="status-dot status-normal"></span>
+                                    </div>
+                                </div>
+                                <div class="rmu-item-info">
+                                    <span>Tower</span>
+                                    <span>Building A</span>
+                                </div>
+                            </div>
+                            <div class="rmu-item">
+                                <div class="rmu-item-header">
+                                    <span class="rmu-name">RMU-002</span>
+                                    <div class="rmu-status">
+                                        <span class="status-text warning">Warning</span>
+                                        <span class="status-dot status-warning"></span>
+                                    </div>
+                                </div>
+                                <div class="rmu-item-info">
+                                    <span>Tower</span>
+                                    <span>Building B</span>
+                                </div>
+                            </div>
+                            <div class="rmu-item">
+                                <div class="rmu-item-header">
+                                    <span class="rmu-name">RMU-003</span>
+                                    <div class="rmu-status">
+                                        <span class="status-text error">Offline</span>
+                                        <span class="status-dot status-offline"></span>
+                                    </div>
+                                </div>
+                                <div class="rmu-item-info">
+                                    <span>Box</span>
+                                    <span>Building C</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 中间：RMU 详细信息 -->
+                <div class="rmu-detail-panel">
+                    <!-- RMU Title Section -->
+                    <div class="rmu-title-section">
+                        <div class="title-content">
+                            <h1>RMU-001</h1>
+                            <div class="rmu-main-status">
+                                <span class="status-badge status-active">Online</span>
+                                <span class="status-text success">Normal Operation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overview Section -->
+                    <div class="section-block">
+                        <div class="section-header">
+                            <div class="overview-header">
+                                <h2>Overview</h2>
+                            </div>
+                        </div>
+                        <div class="section-content">
+                            <div class="rmu-info">
+                                <div class="info-group">
+                                    <h3>Basic Information</h3>
+                                    <div class="info-content">
+                                        <div class="info-item">
+                                            <label>Type:</label>
+                                            <span>Tower</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Location:</label>
+                                            <span>Building A - North Entrance</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Installation Date:</label>
+                                            <span>2024-01-15</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Last Maintenance:</label>
+                                            <span>2024-03-01</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-group">
+                                    <h3>Status Information</h3>
+                                    <div class="info-content">
+                                        <div class="info-item">
+                                            <label>Power:</label>
+                                            <span class="status-text success">Normal</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Network:</label>
+                                            <span class="status-text success">Connected</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Temperature:</label>
+                                            <span>32°C</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Humidity:</label>
+                                            <span>45%</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Fan Status:</label>
+                                            <span class="status-text success">Running (800 RPM)</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Cameras:</label>
+                                            <span class="status-text">3 Online / 1 Offline</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Network Devices Section -->
+                    <div class="section-block">
+                        <div class="section-header">
+                            <h2>Network Devices</h2>
+                        </div>
+                        <div class="section-content">
+                            <div class="device-grid">
+                                <!-- Router -->
+                                <div class="device-card">
+                                    <div class="device-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                        </svg>
+                                    </div>
+                                    <div class="device-info">
+                                        <h4>Router (Teltonika)</h4>
+                                        <div class="device-details">
+                                            <div class="detail-item">
+                                                <label>Model:</label>
+                                                <span>RUT950</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Network:</label>
+                                                <span>Verizon</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Uplink:</label>
+                                                <span>5 Mbps</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Signal:</label>
+                                                <div class="signal-strength">
+                                                    <div class="signal-bar active"></div>
+                                                    <div class="signal-bar active"></div>
+                                                    <div class="signal-bar active"></div>
+                                                    <div class="signal-bar"></div>
+                                                    <div class="signal-bar"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Switch -->
+                                <div class="device-card">
+                                    <div class="device-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <rect x="2" y="2" width="20" height="20" rx="2" ry="2"/>
+                                            <line x1="6" y1="6" x2="6" y2="18"/>
+                                            <line x1="18" y1="6" x2="18" y2="18"/>
+                                        </svg>
+                                    </div>
+                                    <div class="device-info">
+                                        <h4>Switch (Ubiquiti)</h4>
+                                        <div class="device-details">
+                                            <div class="detail-item">
+                                                <label>Model:</label>
+                                                <span>US-8-60W</span>
+                                            </div>
+                                            <div class="port-status-grid">
+                                                <div class="port-row">
+                                                    <div class="port-item">
+                                                        <label>Port 1:</label>
+                                                        <span class="status-text success">Active</span>
+                                                    </div>
+                                                    <div class="port-item">
+                                                        <label>Port 2:</label>
+                                                        <span class="status-text success">Active</span>
+                                                    </div>
+                                                </div>
+                                                <div class="port-row">
+                                                    <div class="port-item">
+                                                        <label>Port 3:</label>
+                                                        <span class="status-text success">Active</span>
+                                                    </div>
+                                                    <div class="port-item">
+                                                        <label>Port 4:</label>
+                                                        <span class="status-text error">Inactive</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Power Usage:</label>
+                                                <span>24W / 60W</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Energy Devices Section -->
+                    <div class="section-block">
+                        <div class="section-header">
+                            <h2>Energy Devices</h2>
+                        </div>
+                        <div class="section-content">
+                            <div class="device-grid">
+                                <!-- Solar Controller -->
+                                <div class="device-card">
+                                    <div class="device-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M12 3v18M3 12h18"/>
+                                            <path d="M14 8l-4 8"/>
+                                            <path d="M8 10l8 4"/>
+                                        </svg>
+                                    </div>
+                                    <div class="device-info">
+                                        <h4>Solar Controller (Victron)</h4>
+                                        <div class="device-details">
+                                            <div class="detail-item">
+                                                <label>Model:</label>
+                                                <span>MPPT 100/30</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Power:</label>
+                                                <span>28.5V / 12.3A</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Status:</label>
+                                                <span class="status-text success">Charging</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Battery -->
+                                <div class="device-card">
+                                    <div class="device-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <rect x="6" y="7" width="12" height="10"/>
+                                            <line x1="10" y1="3" x2="14" y2="3"/>
+                                            <line x1="12" y1="7" x2="12" y2="17"/>
+                                        </svg>
+                                    </div>
+                                    <div class="device-info">
+                                        <h4>Battery</h4>
+                                        <div class="device-details">
+                                            <div class="detail-item">
+                                                <label>Type:</label>
+                                                <span>Lithium-ion</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Capacity:</label>
+                                                <span>100Ah / 12V</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Level:</label>
+                                                <div class="battery-status">
+                                                    <div class="battery-progress">
+                                                        <div class="battery-level" style="width: 75%"></div>
+                                                    </div>
+                                                    <span class="battery-text">75%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Solar Panel -->
+                                <div class="device-card">
+                                    <div class="device-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M3 12h18M12 3v18"/>
+                                            <rect x="6" y="6" width="12" height="12"/>
+                                        </svg>
+                                    </div>
+                                    <div class="device-info">
+                                        <h4>Solar Panel</h4>
+                                        <div class="device-details">
+                                            <div class="detail-item">
+                                                <label>Model:</label>
+                                                <span>SP-200W</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Output:</label>
+                                                <span>180W (90%)</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Status:</label>
+                                                <span class="status-text success">Normal</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Cameras Section -->
+                    <div class="section-block">
+                        <div class="section-header">
+                            <h2>Security Cameras</h2>
+                        </div>
+                        <div class="section-content">
+                            <div class="camera-grid">
+                                <!-- Camera 1 -->
+                                <div class="camera-card">
+                                    <div class="camera-preview">
+                                        <img src="camera1.jpg" alt="Camera 1">
+                                        <span class="status-dot status-normal"></span>
+                                    </div>
+                                    <div class="camera-info">
+                                        <h4>Camera 1</h4>
+                                        <p class="status-text">Status: Normal</p>
+                                        <p class="firmware-version">Firmware: v2.4.6</p>
+                                        <p class="last-update-time">Last updated: 2024-03-15 10:00</p>
+                                        <div class="camera-actions">
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M21 10v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10"/>
+                                                    <path d="M12 2v8M8 5l4-3 4 3"/>
+                                                </svg>
+                                                Upgrade
+                                            </button>
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M12 2v6M12 16v6"/>
+                                                    <path d="M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+                                                </svg>
+                                                Reboot
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Camera 2 -->
+                                <div class="camera-card">
+                                    <div class="camera-preview">
+                                        <img src="camera2.jpg" alt="Camera 2">
+                                        <span class="status-dot status-offline"></span>
+                                    </div>
+                                    <div class="camera-info">
+                                        <h4>Camera 2</h4>
+                                        <p class="status-text error">Status: Offline</p>
+                                        <p class="firmware-version">Firmware: v2.4.6</p>
+                                        <p class="last-update-time">Last updated: 2024-03-15 09:45</p>
+                                        <div class="camera-actions">
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M21 10v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10"/>
+                                                    <path d="M12 2v8M8 5l4-3 4 3"/>
+                                                </svg>
+                                                Upgrade
+                                            </button>
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M12 2v6M12 16v6"/>
+                                                    <path d="M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+                                                </svg>
+                                                Reboot
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Camera 3 -->
+                                <div class="camera-card">
+                                    <div class="camera-preview">
+                                        <img src="camera3.jpg" alt="Camera 3">
+                                        <span class="status-dot status-normal"></span>
+                                    </div>
+                                    <div class="camera-info">
+                                        <h4>Camera 3</h4>
+                                        <p class="status-text">Status: Normal</p>
+                                        <p class="firmware-version">Firmware: v2.4.6</p>
+                                        <p class="last-update-time">Last updated: 2024-03-15 10:02</p>
+                                        <div class="camera-actions">
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M21 10v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10"/>
+                                                    <path d="M12 2v8M8 5l4-3 4 3"/>
+                                                </svg>
+                                                Upgrade
+                                            </button>
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M12 2v6M12 16v6"/>
+                                                    <path d="M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+                                                </svg>
+                                                Reboot
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Camera 4 -->
+                                <div class="camera-card">
+                                    <div class="camera-preview">
+                                        <img src="camera4.jpg" alt="Camera 4">
+                                        <span class="status-dot status-warning"></span>
+                                    </div>
+                                    <div class="camera-info">
+                                        <h4>Camera 4</h4>
+                                        <p class="status-text warning">Status: Poor Signal</p>
+                                        <p class="firmware-version">Firmware: v2.4.6</p>
+                                        <p class="last-update-time">Last updated: 2024-03-15 09:58</p>
+                                        <div class="camera-actions">
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M21 10v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10"/>
+                                                    <path d="M12 2v8M8 5l4-3 4 3"/>
+                                                </svg>
+                                                Upgrade
+                                            </button>
+                                            <button class="action-btn">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M12 2v6M12 16v6"/>
+                                                    <path d="M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+                                                </svg>
+                                                Reboot
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：事件历史 -->
+                <div class="event-history-panel">
+                    <div class="panel-header">
+                        <h3>Event History</h3>
+                        <div class="history-filters">
+                            <select class="history-filter time-filter">
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                            <select class="history-filter type-filter">
+                                <option value="all">All Events</option>
+                                <option value="warning">Warnings</option>
+                                <option value="error">Errors</option>
+                                <option value="info">Information</option>
+                                <option value="success">Success</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <div class="history-header">
+                                <span class="history-time">2024-03-15 10:30</span>
+                                <span class="status-badge status-warning">Warning</span>
+                            </div>
+                            <p>High temperature detected</p>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-header">
+                                <span class="history-time">2024-03-15 10:15</span>
+                                <span class="status-badge status-error">Error</span>
+                            </div>
+                            <p>Camera 2 connection lost</p>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-header">
+                                <span class="history-time">2024-03-15 09:15</span>
+                                <span class="status-badge status-success">Normal</span>
+                            </div>
+                            <p>System check completed</p>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-header">
+                                <span class="history-time">2024-03-15 09:00</span>
+                                <span class="status-badge status-info">Info</span>
+                            </div>
+                            <p>Configuration updated</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <span>© 2024 FOS Company. All rights reserved.</span>
+                <span>Powered by Homaxi Inc</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

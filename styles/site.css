@@ -1,0 +1,348 @@
+/* 导航栏样式 - 与 dashboard0 保持一致 */
+.nav-bar {
+    background-color: #2563eb;  /* 蓝色背景 */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 2px;
+}
+
+.nav-item {
+    border-right: none;  /* 移除分隔线 */
+}
+
+.nav-link {
+    display: block;
+    padding: 8px 15px;
+    color: white;  /* 白色文字 */
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);  /* 半透明白色背景 */
+}
+
+.nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: none;  /* 移除底部边框 */
+}
+
+/* 子导航栏样式 */
+.sub-nav {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* 站点标题样式修复 */
+.site-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1e293b;
+}
+
+.status-badge.status-active {
+    background-color: #22c55e;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* 站点概览样式 */
+.site-overview {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* 平面图样式 */
+.floor-plan {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.floor-plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.floor-plan-legend {
+    display: flex;
+    gap: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+/* 工具和历史记录面板样式 */
+.tools-history {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.tools-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tool-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tool-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+/* 主内容布局 */
+.main-content {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 15px;
+    padding: 15px;
+    background-color: #f8fafc;
+}
+
+/* 站点信息样式 */
+.info-group {
+    margin-bottom: 20px;
+}
+
+.info-group h3 {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 10px 0;
+}
+
+.info-item {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.info-item label {
+    width: 120px;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.info-item span {
+    color: #1e293b;
+    font-size: 0.9rem;
+}
+
+/* 平面图容器样式 */
+.floor-plan-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%;
+    background: #f8fafc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.floor-plan-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 状态点样式 */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-dot.operational {
+    background-color: #22c55e;
+}
+
+.status-dot.warning {
+    background-color: #fbbf24;
+}
+
+.status-dot.critical {
+    background-color: #ef4444;
+}
+
+.status-dot.relocation {
+    background-color: #6366f1;
+}
+
+/* RMU标记样式 */
+.rmu-marker {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid white;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.rmu-marker.operational {
+    background-color: #22c55e;
+}
+
+.rmu-marker.warning {
+    background-color: #fbbf24;
+}
+
+.rmu-marker.critical {
+    background-color: #ef4444;
+}
+
+.rmu-marker:hover {
+    transform: translate(-50%, -50%) scale(1.5);
+    z-index: 2;
+}
+
+/* RMU提示框样式 */
+.rmu-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s;
+    z-index: 10;
+    width: 200px;
+    margin-bottom: 8px;
+}
+
+.rmu-marker:hover .rmu-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.tooltip-title {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.tooltip-content {
+    font-size: 0.875rem;
+}
+
+.tooltip-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    color: #64748b;
+}
+
+/* 历史记录样式 */
+.history-section h3 {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    color: #1e293b;
+}
+
+.history-item {
+    padding: 10px;
+    border-radius: 4px;
+    background: #f8fafc;
+    margin-bottom: 8px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.history-time {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.history-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #1e293b;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .site-overview,
+    .floor-plan,
+    .tools-history {
+        margin-bottom: 15px;
+    }
+}

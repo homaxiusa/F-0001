@@ -1,0 +1,358 @@
+/* Header styles */
+.header-logo {
+    width: auto;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Navigation styles */
+.nav-bar {
+    background-color: #2563eb;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 20px;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Main content layout */
+.main-content {
+    display: grid;
+    grid-template-columns: 220px 1fr 300px;
+    gap: 15px;
+    padding: 15px;
+    background-color: #f8fafc;
+}
+
+/* Map container styles */
+.map-container {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search {
+    margin-bottom: 15px;
+}
+
+.search-input {
+    margin-bottom: 10px;
+}
+
+.search-input input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.filter-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.filter-item label {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.filter-item select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: white;
+}
+
+/* 左侧边栏样式 */
+.sidebar {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.overview-section {
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.overview-section h3 {
+    color: #1e293b;
+    font-size: 1rem;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+}
+
+.stats {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.total-row {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.detail-row {
+    color: #64748b;
+    margin: 0;
+}
+
+/* 右侧告警面板样式 */
+.right-panel {
+    background: white;
+    padding: 15px;
+}
+
+.alerts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.alerts-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.time-filter select {
+    padding: 4px 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.alert-item {
+    padding: 8px 0;
+    border-left: 3px solid #ef4444;
+    background: #f8fafc;
+    margin-bottom: 8px;
+    padding-left: 10px;
+}
+
+.alert-time {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.alert-site {
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.alert-message {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar,
+    .right-panel {
+        max-width: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .header-logo {
+        justify-content: center;
+    }
+    
+    .header-right {
+        justify-content: center;
+    }
+}
+
+/* 地图容器样式 */
+.map {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 61.8%; /* 1582/2560 ≈ 61.8% - 保持原始宽高比 */
+    background: #f8fafc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.map-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 改回cover以填充整个容器 */
+    background: #f8fafc;
+}
+
+.markers-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+/* 标记点样式 */
+.marker {
+    position: absolute;
+    width: 8px; /* 稍微调小标记点尺寸 */
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid white;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    pointer-events: auto;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); /* 添加细微阴影 */
+}
+
+.marker:hover {
+    transform: translate(-50%, -50%) scale(1.5);
+    z-index: 2;
+}
+
+.marker.operational {
+    background-color: #22c55e;
+}
+
+.marker.warning {
+    background-color: #fbbf24;
+}
+
+.marker.error {
+    background-color: #ef4444;
+}
+
+/* 标记点提示框样式 */
+.marker-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease;
+    z-index: 3;
+    margin-bottom: 8px;
+}
+
+.marker:hover .marker-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* 搜索和筛选区域样式调整 */
+.search-container {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    margin-bottom: 10px;
+}
+
+.search-input input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.filter-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.filter-item label {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.filter-item select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: white;
+}
+
+.nav-bar {
+    background-color: #2563eb;
+}
+
+.nav-list {
+    padding: 0 20px;
+}
+
+.nav-link {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+} 

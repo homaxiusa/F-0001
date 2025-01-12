@@ -1,0 +1,884 @@
+/* RMU 详情页特定样式 */
+.rmu-overview {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    overflow: hidden;
+}
+
+.overview-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.rmu-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.rmu-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.rmu-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* 设备网格布局 */
+.devices-section {
+    margin-top: var(--spacing-lg);
+}
+
+.camera-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.camera-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    min-width: 0;
+}
+
+.camera-preview {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: #000;
+    cursor: pointer;
+}
+
+.camera-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.2s;
+}
+
+.camera-preview:hover img {
+    opacity: 0.9;
+}
+
+.camera-preview .status-dot,
+.rmu-marker .status-dot {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.camera-preview .status-dot.status-normal,
+.rmu-marker.status-normal { background-color: var(--success-color); }
+.camera-preview .status-dot.status-warning,
+.rmu-marker.status-warning { background-color: var(--warning-color); }
+.camera-preview .status-dot.status-offline,
+.rmu-marker.status-offline { background-color: var(--danger-color); }
+
+.camera-info {
+    padding: var(--spacing-sm);
+}
+
+.last-update-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin: var(--spacing-xs) 0;
+    font-style: italic;
+}
+
+.camera-info h4 {
+    margin: 0 0 var(--spacing-xs);
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.firmware-version {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin: var(--spacing-xs) 0;
+}
+
+.status-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.status-text.success { color: var(--success-color); }
+.status-text.error { color: var(--danger-color); }
+
+.camera-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: white;
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background: var(--background-color);
+}
+
+/* 历史记录部分 */
+.history-section {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 8px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.history-time {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* 响应式布局 */
+@media (max-width: 1440px) {
+    .camera-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .camera-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .camera-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 三栏布局 */
+.three-column-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    gap: var(--spacing-md);
+    height: calc(100vh - 168px); /* 减去头部和导航的高度 */
+    overflow: hidden;
+}
+
+/* 左侧 RMU 列表面板 */
+.rmu-list-panel {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.section-block {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    overflow: hidden;
+}
+
+.section-block .section-header {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-block .section-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.section-block .section-content {
+    padding: var(--spacing-md);
+    max-height: 2000px;  /* 设置一个足够大的最大高度 */
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+.section-block .section-content.collapsed {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+.rmu-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+}
+
+.rmu-item {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.rmu-item.active {
+    border-color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.rmu-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.rmu-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.rmu-status .status-text {
+    font-size: 0.75rem;
+}
+
+.rmu-status .status-text.warning {
+    color: var(--warning-color);
+}
+
+.rmu-name {
+    font-weight: 500;
+}
+
+.rmu-item-info {
+    display: flex;
+    gap: var(--spacing-md);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* 中间 RMU 详情面板 */
+.rmu-detail-panel {
+    overflow-y: auto;
+}
+
+/* 右侧事件历史面板 */
+.event-history-panel {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.history-filters {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.history-filter {
+    flex: 1;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    background-color: white;
+    cursor: pointer;
+}
+
+.history-filter:hover {
+    border-color: var(--primary-color);
+}
+
+/* 状态徽章样式补充 */
+.status-badge.status-info {
+    background-color: #3b82f6;
+}
+
+.status-badge.status-error {
+    background-color: var(--danger-color);
+}
+
+/* 事件类型颜色指示 */
+.type-filter option[value="warning"] {
+    color: var(--warning-color);
+}
+
+.type-filter option[value="error"] {
+    color: var(--danger-color);
+}
+
+.type-filter option[value="success"] {
+    color: var(--success-color);
+}
+
+.type-filter option[value="info"] {
+    color: #3b82f6;
+}
+
+/* 响应式布局调整 */
+@media (max-width: 1440px) {
+    .three-column-layout {
+        grid-template-columns: 240px 1fr 300px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .three-column-layout {
+        grid-template-columns: 200px 1fr 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .three-column-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .rmu-list-panel,
+    .event-history-panel {
+        height: 400px;
+    }
+}
+
+/* 面包屑导航样式 */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    padding-left: var(--spacing-md);
+}
+
+.breadcrumb-item {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.breadcrumb-item:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumb-item.active {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.breadcrumb-separator {
+    color: var(--text-secondary);
+    margin: 0 var(--spacing-sm);
+    font-size: 0.75rem;
+}
+
+/* 网络设备样式 */
+.network-devices {
+    margin-bottom: var(--spacing-lg);
+}
+
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.device-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.device-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-color);
+    border-radius: var(--radius-sm);
+    color: var(--primary-color);
+}
+
+.device-info {
+    flex: 1;
+}
+
+.device-info h4 {
+    margin: 0 0 var(--spacing-sm);
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.device-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.detail-item label {
+    color: var(--text-secondary);
+}
+
+/* 响应式布局调整 */
+@media (max-width: 1440px) {
+    .device-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .device-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 信号强度指示器 */
+.signal-strength {
+    display: inline-flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 16px;
+}
+
+.signal-bar {
+    width: 3px;
+    background-color: var(--border-color);
+    border-radius: 1px;
+}
+
+.signal-bar:nth-child(1) { height: 4px; }
+.signal-bar:nth-child(2) { height: 7px; }
+.signal-bar:nth-child(3) { height: 10px; }
+.signal-bar:nth-child(4) { height: 13px; }
+.signal-bar:nth-child(5) { height: 16px; }
+
+.signal-bar.active {
+    background-color: var(--success-color);
+}
+
+/* 电池状态指示器 */
+.battery-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.battery-progress {
+    width: 60px;
+    height: 12px;
+    background-color: var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.battery-level {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: var(--success-color);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+.battery-text {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* 充电动画 */
+@keyframes charging {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.battery-level.charging {
+    animation: charging 1.5s infinite;
+}
+
+/* 站点平面图预览 */
+.site-map-preview {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.map-container {
+    position: relative;
+    aspect-ratio: 1.33;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.site-map {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.rmu-marker {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.rmu-marker.status-normal {
+    background-color: var(--success-color);
+}
+
+.rmu-marker.status-warning {
+    background-color: var(--warning-color);
+}
+
+.rmu-marker.status-offline {
+    background-color: var(--danger-color);
+}
+
+.rmu-marker.active {
+    box-shadow: 0 0 0 4px rgba(var(--success-color-rgb), 0.2);
+}
+
+.marker-label {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+.btn-expand-map {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: white;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+/* 基础变量定义 */
+:root {
+    /* 使用与 common.css 相同的颜色变量 */
+    --primary-color: #2563eb;
+    --success-color: #22c55e;
+    --success-color-rgb: 40, 167, 69;
+    --warning-color: #fbbf24;
+    --warning-color-rgb: 255, 77, 79;
+    --danger-color: #ef4444;
+    --danger-color-rgb: 220, 53, 69;
+    --background-color: #f0f0f0;
+    --sidebar-color: #e0e0e0;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #dcdcdc;
+}
+
+/* 站点信息样式 */
+.site-info {
+    padding: var(--spacing-md);
+}
+
+.info-row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    margin-bottom: var(--spacing-sm);
+}
+
+.info-row label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    min-width: 100px;
+    padding-right: var(--spacing-md);
+}
+
+.info-row span {
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    flex: 1;
+}
+
+/* 端口状态网格布局 */
+.port-status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.port-row {
+    display: flex;
+    gap: 16px;
+}
+
+.port-item {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.port-item label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* 折叠面板样式 */
+.section-header.collapsible {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.btn-collapse {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: transform 0.3s ease;
+}
+
+.section-header.collapsed .btn-collapse {
+    transform: rotate(-90deg);
+}
+
+.section-content {
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.section-content.collapsed {
+    display: none;
+}
+
+.info-group {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.info-group h3 {
+    margin: 0 0 var(--spacing-md);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.info-group .section-header.collapsible {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-group .section-content {
+    padding: var(--spacing-md);
+}
+
+.info-group .section-content.collapsed {
+    padding: 0;
+    border-top: none;
+}
+
+/* 保持内容区域的样式 */
+.info-content {
+    padding: var(--spacing-md);
+}
+
+/* RMU 标题部分样式 */
+.rmu-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.title-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.title-content h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.rmu-main-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.rmu-main-status .status-text {
+    font-size: 1rem;
+}
+
+.sign-out {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+.sign-out:hover {
+    color: var(--primary-color);
+}
+
+/* 用户区域样式 */
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+@media (max-width: 1200px) {
+    .three-column-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .rmu-list-panel,
+    .rmu-detail-panel,
+    .event-history-panel {
+        height: auto;
+        overflow: visible;
+    }
+}
+
+/* 网络信息样式 */
+.network-info {
+    margin-bottom: 20px;
+}
+
+.network-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-item label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.stat-item span {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+/* 设备部分样式 */
+.device-section {
+    margin-top: 20px;
+}
+
+.device-section h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.device-status {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.status-warning {
+    color: var(--warning-color);
+    font-weight: 500;
+}
