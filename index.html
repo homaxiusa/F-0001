@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homaxi Projects</title>
+    <meta name="description" content="Homaxi Projects - Customer Portal for Facility Operation Services">
+    <meta name="keywords" content="FOS, facility operations, remote monitoring, RMU">
+    <style>
+        :root {
+            --primary-color: #007BFF;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #dcdcdc;
+            --background-color: #f5f5f5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .project-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .project-date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .demo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .demo-item {
+            padding: 10px 0;
+        }
+
+        .demo-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Homaxi Projects</h1>
+        
+        <ul class="project-list">
+            <li class="project-item">
+                <div class="project-header">
+                    <h2 class="project-title">F-001: Customer Portal</h2>
+                    <span class="project-date">Last updated: March 15, 2024</span>
+                </div>
+                <ul class="demo-list">
+                    <li class="demo-item">
+                        <a href="F-001/dashboard0.html" class="demo-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M3 9h18"/>
+                                <path d="M9 21V9"/>
+                            </svg>
+                            Dashboard Demo
+                        </a>
+                    </li>
+                    <li class="demo-item">
+                        <a href="F-001/site11.html" class="demo-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                            SITE Page Demo
+                        </a>
+                    </li>
+                    <li class="demo-item">
+                        <a href="F-001/rmu-001.html" class="demo-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="2" y="2" width="20" height="8" rx="2"/>
+                                <rect x="2" y="14" width="20" height="8" rx="2"/>
+                            </svg>
+                            RMU Page Demo
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html> 
