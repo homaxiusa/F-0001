@@ -1,0 +1,1015 @@
+/* 主要布局 */
+.main-content {
+    padding: 1rem;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* 左侧过滤器面板 */
+.device-filters {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    gap: 0.75rem;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #64748b;
+}
+
+.category-item:hover {
+    background: #f1f5f9;
+}
+
+.category-item.active {
+    background: #e0e7ff;
+    color: #4f46e5;
+}
+
+.category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.count {
+    margin-left: auto;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.count .online {
+    color: #22c55e;  /* 在线设备数使用绿色 */
+    font-weight: 500;
+}
+
+.count .total {
+    color: #64748b;  /* 总数使用灰色 */
+}
+
+/* 当分类被选中时的样式 */
+.category-item.active .count {
+    background: rgba(79, 70, 229, 0.1);
+}
+
+.category-item.active .count .online {
+    color: #4f46e5;
+}
+
+.category-item.active .count .total {
+    color: #6366f1;
+}
+
+/* 设备列表 */
+.device-list {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    flex: 1;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.search-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+}
+
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.device-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.device-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.device-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #1e293b;
+}
+
+.device-location {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin: 0 0 1rem 0;
+}
+
+.device-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.stat-item label {
+    display: block;
+    color: #64748b;
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+/* 信号强度指示器 */
+.signal-strength {
+    display: flex;
+    gap: 2px;
+}
+
+.signal-bar {
+    width: 4px;
+    height: 12px;
+    background: #e2e8f0;
+    border-radius: 2px;
+}
+
+.signal-bar.active {
+    background: #22c55e;
+}
+
+/* 设备详情面板 */
+.device-details {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 300px;
+}
+
+.detail-group {
+    margin-bottom: 1.5rem;
+}
+
+.detail-group h4 {
+    margin: 0 0 0.75rem 0;
+    color: #1e293b;
+    font-size: 0.875rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.detail-item label {
+    color: #64748b;
+}
+
+/* 响应式布局 */
+@media screen and (min-width: 768px) {
+    .content-wrapper {
+        flex-direction: row;
+    }
+
+    .device-filters {
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .device-list {
+        flex: 1;
+    }
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 767px) {
+    .device-filters {
+        width: 100%;
+    }
+
+    .device-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .list-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .search-bar {
+        max-width: 100%;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) {
+    .category-item {
+        padding: 1rem;
+    }
+
+    .device-card {
+        padding: 1rem;
+    }
+
+    button {
+        min-height: 44px;
+    }
+}
+
+/* 电池电量显示 */
+.battery-level {
+    height: 16px;
+    background: #22c55e;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 设备操作按钮 */
+.device-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #1e293b;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+/* 状态标签 */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-badge.status-active {
+    background-color: #22c55e;
+    color: white;
+}
+
+.status-text.success {
+    color: #22c55e;
+}
+
+/* 添加新的状态样式 */
+.status-badge.status-warning {
+    background-color: #fbbf24;
+    color: white;
+}
+
+.status-badge.status-error {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* 调整设备图标颜色 */
+.device-icon svg {
+    stroke: #64748b;
+}
+
+.category-item.active .device-icon svg {
+    stroke: #4f46e5;
+}
+
+/* 视图切换控制 */
+.device-grid,
+.device-table {
+    display: none;
+}
+
+.device-grid.active {
+    display: grid;
+}
+
+.device-table.active {
+    display: block;
+}
+
+/* 列表视图样式 */
+.device-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr 1.5fr 1fr 1fr 1.5fr 1fr;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #f8fafc;
+    font-weight: 500;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr 1.5fr 1fr 1fr 1.5fr 1fr;
+    gap: 0.5rem;
+    padding: 1rem;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-row:hover {
+    background: #f8fafc;
+}
+
+.device-info-compact {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.specs-info {
+    display: flex;
+    gap: 1rem;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.action-btn-small {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #1e293b;
+    cursor: pointer;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+}
+
+.action-btn-small:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+/* 视图切换按钮样式 */
+.view-options {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.view-btn {
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.view-btn.active {
+    background: #e0e7ff;
+    color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 1400px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1.5fr 1fr 1fr 1.5fr 1fr 1fr 1.5fr 1fr;
+    }
+    
+    .col-mac {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1.5fr 1fr 1.5fr 1fr 1fr 1.5fr 1fr;
+    }
+    
+    .col-cloud,
+    .col-mac {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1.5fr 1fr 1.5fr 1fr 1fr 1fr;
+    }
+    
+    .col-specs {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .table-header {
+        display: none;
+    }
+    
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+    
+    .col-model,
+    .col-cloud,
+    .col-mac,
+    .col-location,
+    .col-status,
+    .col-specs,
+    .col-actions {
+        padding-left: 2.5rem;
+    }
+
+    /* 在移动端显示标签 */
+    .col-model::before {
+        content: 'Model: ';
+        color: #64748b;
+    }
+    
+    .col-cloud::before {
+        content: 'Cloud ID: ';
+        color: #64748b;
+    }
+    
+    .col-mac::before {
+        content: 'MAC: ';
+        color: #64748b;
+    }
+}
+
+/* 分页样式 */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.pagination-info {
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.page-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.page-btn.active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 767px) {
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+}
+
+/* 修改操作按钮样式 */
+.col-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.icon-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+    background: #f8fafc;
+}
+
+/* 工具提示样式 */
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.5rem;
+    background: #1e293b;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+    margin-bottom: 0.5rem;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: #1e293b transparent transparent transparent;
+}
+
+.icon-btn:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+    .col-actions {
+        justify-content: flex-start;
+        padding-left: 2.5rem;
+    }
+
+    .icon-btn {
+        width: 40px;  /* 在移动端增大点击区域 */
+        height: 40px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) {
+    .tooltip {
+        display: none;
+    }
+}
+
+/* 列表头部操作按钮样式 */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.list-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.action-btn svg {
+    stroke: currentColor;
+}
+
+.action-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+    background: #f8fafc;
+}
+
+/* 主要操作按钮 */
+.action-btn.primary {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+
+.action-btn.primary:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    color: white;
+}
+
+/* 危险操作按钮 */
+.action-btn.danger {
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+.action-btn.danger:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 1024px) {
+    .list-header {
+        flex-wrap: wrap;
+    }
+
+    .list-actions {
+        order: 2;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .search-bar {
+        order: 1;
+        flex: 1;
+    }
+
+    .view-options {
+        order: 1;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .list-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        justify-content: center;
+    }
+}
+
+/* 最近在线时间列样式 */
+.col-last-online {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.time-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.time-info::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    margin-right: 4px;
+}
+
+.time-info.offline::before {
+    background: #ef4444;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 1400px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1.5fr 1fr 1fr 1.5fr 1fr 1fr 1.5fr 1fr;
+    }
+    
+    .col-mac {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1.5fr 1fr 1.5fr 1fr 1fr 1.5fr 1fr;
+    }
+    
+    .col-cloud,
+    .col-mac {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1.5fr 1fr 1.5fr 1fr 1fr 1fr;
+    }
+    
+    .col-specs {
+        display: none;
+    }
+}
+
+/* 移动端显示标签 */
+@media screen and (max-width: 768px) {
+    .col-last-online::before {
+        content: 'Last Online: ';
+        color: #64748b;
+    }
+}
+
+/* 筛选器样式优化 */
+.section-block h3 {
+    color: #1e293b;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-item label {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* 下拉框包装器 */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* 下拉框样式 */
+.select-wrapper select {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    padding-right: 2.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    background: white;
+    color: #1e293b;
+    font-size: 0.875rem;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* 下拉箭头图标 */
+.select-arrow {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+    stroke: #64748b;
+    stroke-width: 2;
+}
+
+/* 悬停和焦点状态 */
+.select-wrapper:hover select {
+    border-color: #94a3b8;
+}
+
+.select-wrapper select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* 选项样式 */
+.select-wrapper select option {
+    padding: 0.5rem;
+}
+
+/* 移动端优化 */
+@media screen and (max-width: 768px) {
+    .select-wrapper select {
+        padding: 0.75rem;  /* 增大点击区域 */
+        padding-right: 2.5rem;
+    }
+}
+
+/* 搜索区域样式 */
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    max-width: 600px;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.filter-badge {
+    background: #2563eb;
+    color: white;
+    padding: 0.125rem 0.375rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+}
+
+/* 筛选弹窗样式 */
+.filter-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-modal.active {
+    display: flex;
+}
+
+.filter-modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-modal-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    color: #1e293b;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.filter-modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.filter-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 640px) {
+    .filter-row {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+} 

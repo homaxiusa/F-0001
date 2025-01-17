@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Management - FOS</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/device.css">
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-logo">
+            <img src="images/logo.png" alt="FOS" width="80" height="40">
+        </div>
+        <div class="header-center">
+            <h1>Facility Operation Services</h1>
+            <p>Your Trusted Remote Monitoring Solution</p>
+        </div>
+        <div class="header-right">
+            <span>Welcome, John Doe</span>
+            <button class="sign-out-btn">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="dashboard0.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="site11.html" class="nav-link">Sites</a>
+            </li>
+            <li class="nav-item">
+                <a href="rmu-001.html" class="nav-link">RMUs</a>
+            </li>
+            <li class="nav-item">
+                <a href="device.html" class="nav-link active">Devices</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <!-- 左侧：只保留设备类别 -->
+            <div class="device-filters">
+                <div class="section-block">
+                    <h3>Device Categories</h3>
+                    <ul class="category-list">
+                        <li class="category-item">
+                            <span class="category-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="2" y="2" width="20" height="8" rx="2"/>
+                                    <rect x="2" y="14" width="20" height="8" rx="2"/>
+                                </svg>
+                            </span>
+                            Network Devices
+                            <span class="count">
+                                <span class="online">6</span>/<span class="total">8</span>
+                            </span>
+                        </li>
+                        <li class="category-item">
+                            <span class="category-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="16"/>
+                                    <line x1="8" y1="12" x2="16" y2="12"/>
+                                </svg>
+                            </span>
+                            Power Systems
+                            <span class="count">
+                                <span class="online">10</span>/<span class="total">12</span>
+                            </span>
+                        </li>
+                        <li class="category-item active">
+                            <span class="category-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                            </span>
+                            Cameras
+                            <span class="count">
+                                <span class="online">9</span>/<span class="total">12</span>
+                            </span>
+                        </li>
+                        <li class="category-item">
+                            <span class="category-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="16" rx="2"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <line x1="12" y1="8" x2="12" y2="16"/>
+                                </svg>
+                            </span>
+                            Recorders
+                            <span class="count">
+                                <span class="online">3</span>/<span class="total">4</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 中间：设备列表 -->
+            <div class="device-list">
+                <div class="list-header">
+                    <!-- 左侧：操作按钮组 -->
+                    <div class="list-actions">
+                        <button class="action-btn primary" title="Add Device">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                        <button class="action-btn primary" title="Upgrade Devices">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 10v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10"/>
+                                <path d="M12 2v8M8 5l4-3 4 3"/>
+                            </svg>
+                            <span>Upgrade</span>
+                        </button>
+                        <button class="action-btn danger" title="Delete Selected">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M3 6h18"/>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                            <span>Delete</span>
+                        </button>
+                        <button class="action-btn" title="Share">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="18" cy="5" r="3"/>
+                                <circle cx="6" cy="12" r="3"/>
+                                <circle cx="18" cy="19" r="3"/>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                        <button class="action-btn" title="Refresh">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M23 4v6h-6"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+
+                    <div class="search-section">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search devices...">
+                            <button class="search-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <button class="filter-btn" id="openFilter">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                            </svg>
+                            <span>Filters</span>
+                            <span class="filter-badge">3</span>
+                        </button>
+                    </div>
+
+                    <!-- 右侧：视图切换 -->
+                    <div class="view-options">
+                        <button class="view-btn" data-view="grid">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </button>
+                        <button class="view-btn active" data-view="list">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <line x1="8" y1="6" x2="21" y2="6"/>
+                                <line x1="8" y1="12" x2="21" y2="12"/>
+                                <line x1="8" y1="18" x2="21" y2="18"/>
+                                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 网格视图 -->
+                <div class="device-grid">
+                    <!-- Camera 1 -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <span class="device-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                            </span>
+                            <span class="status-badge status-active">Online</span>
+                        </div>
+                        <div class="device-info">
+                            <h4>Camera 1</h4>
+                            <p class="device-location">Site-001 / RMU-001</p>
+                            <div class="device-stats">
+                                <div class="stat-item">
+                                    <label>Resolution</label>
+                                    <span>4MP</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Stream</label>
+                                    <span>2.5 Mbps</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="device-actions">
+                            <button class="action-btn">View</button>
+                            <button class="action-btn">Settings</button>
+                        </div>
+                    </div>
+
+                    <!-- Camera 2 -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <span class="device-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                            </span>
+                            <span class="status-badge status-warning">Poor Signal</span>
+                        </div>
+                        <div class="device-info">
+                            <h4>Camera 2</h4>
+                            <p class="device-location">Site-001 / RMU-001</p>
+                            <div class="device-stats">
+                                <div class="stat-item">
+                                    <label>Resolution</label>
+                                    <span>4MP</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Stream</label>
+                                    <span>1.2 Mbps</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="device-actions">
+                            <button class="action-btn">View</button>
+                            <button class="action-btn">Settings</button>
+                        </div>
+                    </div>
+
+                    <!-- Camera 3 -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <span class="device-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                            </span>
+                            <span class="status-badge status-active">Online</span>
+                        </div>
+                        <div class="device-info">
+                            <h4>Camera 3</h4>
+                            <p class="device-location">Site-001 / RMU-001</p>
+                            <div class="device-stats">
+                                <div class="stat-item">
+                                    <label>Resolution</label>
+                                    <span>4MP</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Stream</label>
+                                    <span>2.8 Mbps</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="device-actions">
+                            <button class="action-btn">View</button>
+                            <button class="action-btn">Settings</button>
+                        </div>
+                    </div>
+
+                    <!-- Camera 4 -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <span class="device-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                            </span>
+                            <span class="status-badge status-error">Offline</span>
+                        </div>
+                        <div class="device-info">
+                            <h4>Camera 4</h4>
+                            <p class="device-location">Site-001 / RMU-001</p>
+                            <div class="device-stats">
+                                <div class="stat-item">
+                                    <label>Resolution</label>
+                                    <span>4MP</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Last Seen</label>
+                                    <span>2h ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="device-actions">
+                            <button class="action-btn">View</button>
+                            <button class="action-btn">Settings</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 列表视图 -->
+                <div class="device-table active">
+                    <div class="table-header">
+                        <div class="col-device">Device</div>
+                        <div class="col-model">Model</div>
+                        <div class="col-cloud">Cloud ID</div>
+                        <div class="col-mac">MAC Address</div>
+                        <div class="col-location">Location</div>
+                        <div class="col-status">Status</div>
+                        <div class="col-last-online">Last Online</div>
+                        <div class="col-specs">Specifications</div>
+                        <div class="col-actions">Actions</div>
+                    </div>
+                    <div class="table-content">
+                        <!-- Camera 1 -->
+                        <div class="table-row">
+                            <div class="col-device">
+                                <div class="device-info-compact">
+                                    <span class="device-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                            <circle cx="12" cy="13" r="4"/>
+                                        </svg>
+                                    </span>
+                                    <span>Camera 1</span>
+                                </div>
+                            </div>
+                            <div class="col-model">IPC-2MP-D</div>
+                            <div class="col-cloud">CLD-001-2024</div>
+                            <div class="col-mac">00:1B:44:11:3A:B7</div>
+                            <div class="col-location">Site-001 / RMU-001</div>
+                            <div class="col-status">
+                                <span class="status-badge status-active">Online</span>
+                            </div>
+                            <div class="col-last-online">
+                                <span class="time-info">Now</span>
+                            </div>
+                            <div class="col-specs">
+                                <div class="specs-info">
+                                    <span>4MP</span>
+                                    <span>2.5 Mbps</span>
+                                </div>
+                            </div>
+                            <div class="col-actions">
+                                <button class="icon-btn" title="View">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span class="tooltip">View</span>
+                                </button>
+                                <button class="icon-btn" title="Settings">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                                    </svg>
+                                    <span class="tooltip">Settings</span>
+                                </button>
+                                <button class="icon-btn" title="Restart">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M23 4v6h-6"/>
+                                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                    </svg>
+                                    <span class="tooltip">Restart</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Camera 2 -->
+                        <div class="table-row">
+                            <div class="col-device">
+                                <div class="device-info-compact">
+                                    <span class="device-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                            <circle cx="12" cy="13" r="4"/>
+                                        </svg>
+                                    </span>
+                                    <span>Camera 2</span>
+                                </div>
+                            </div>
+                            <div class="col-model">IPC-2MP-D</div>
+                            <div class="col-cloud">CLD-002-2024</div>
+                            <div class="col-mac">00:1B:44:11:3A:B8</div>
+                            <div class="col-location">Site-001 / RMU-002</div>
+                            <div class="col-status">
+                                <span class="status-badge status-warning">Poor Signal</span>
+                            </div>
+                            <div class="col-last-online">
+                                <span class="time-info offline">2h ago</span>
+                            </div>
+                            <div class="col-specs">
+                                <div class="specs-info">
+                                    <span>4MP</span>
+                                    <span>1.8 Mbps</span>
+                                </div>
+                            </div>
+                            <div class="col-actions">
+                                <button class="icon-btn" title="View">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span class="tooltip">View</span>
+                                </button>
+                                <button class="icon-btn" title="Settings">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                                    </svg>
+                                    <span class="tooltip">Settings</span>
+                                </button>
+                                <button class="icon-btn" title="Restart">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M23 4v6h-6"/>
+                                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                    </svg>
+                                    <span class="tooltip">Restart</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Camera 3 -->
+                        <div class="table-row">
+                            <div class="col-device">
+                                <div class="device-info-compact">
+                                    <span class="device-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                            <circle cx="12" cy="13" r="4"/>
+                                        </svg>
+                                    </span>
+                                    <span>Camera 3</span>
+                                </div>
+                            </div>
+                            <div class="col-model">IPC-2MP-D</div>
+                            <div class="col-cloud">CLD-003-2024</div>
+                            <div class="col-mac">00:1B:44:11:3A:B9</div>
+                            <div class="col-location">Site-001 / RMU-003</div>
+                            <div class="col-status">
+                                <span class="status-badge status-active">Online</span>
+                            </div>
+                            <div class="col-last-online">
+                                <span class="time-info">Now</span>
+                            </div>
+                            <div class="col-specs">
+                                <div class="specs-info">
+                                    <span>4MP</span>
+                                    <span>2.2 Mbps</span>
+                                </div>
+                            </div>
+                            <div class="col-actions">
+                                <button class="icon-btn" title="View">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span class="tooltip">View</span>
+                                </button>
+                                <button class="icon-btn" title="Settings">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                                    </svg>
+                                    <span class="tooltip">Settings</span>
+                                </button>
+                                <button class="icon-btn" title="Restart">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M23 4v6h-6"/>
+                                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                    </svg>
+                                    <span class="tooltip">Restart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination">
+                        <div class="pagination-info">
+                            Showing <span>1-20</span> of <span>20</span> items
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="page-btn" disabled data-action="prev">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <div class="page-numbers">
+                                <button class="page-btn active">1</button>
+                            </div>
+                            <button class="page-btn" disabled data-action="next">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 FOS Company. All rights reserved.</p>
+        <p class="footer-powered">Powered by Homaxi Inc</p>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/device.js"></script>
+
+    <!-- 筛选弹窗 -->
+    <div class="filter-modal" id="filterModal">
+        <div class="filter-modal-content">
+            <div class="filter-modal-header">
+                <h3>Filter Devices</h3>
+                <button class="close-btn" id="closeFilter">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="filter-modal-body">
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>Country</label>
+                            <div class="select-wrapper">
+                                <select id="countryFilter">
+                                    <option value="">All Countries</option>
+                                    <option value="US">United States</option>
+                                    <option value="CN">China</option>
+                                    <option value="JP">Japan</option>
+                                </select>
+                                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="filter-item">
+                            <label>State/Province</label>
+                            <div class="select-wrapper">
+                                <select id="stateFilter">
+                                    <option value="">All States</option>
+                                    <!-- 动态加载选项 -->
+                                </select>
+                                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>City</label>
+                            <div class="select-wrapper">
+                                <select id="cityFilter">
+                                    <option value="">All Cities</option>
+                                    <!-- 动态加载选项 -->
+                                </select>
+                                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="filter-item">
+                            <label>Status</label>
+                            <div class="select-wrapper">
+                                <select id="statusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="online">Online</option>
+                                    <option value="offline">Offline</option>
+                                    <option value="warning">Warning</option>
+                                </select>
+                                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>Site</label>
+                            <div class="select-wrapper">
+                                <select id="siteFilter">
+                                    <option value="">All Sites</option>
+                                    <!-- 动态加载选项 -->
+                                </select>
+                                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="filter-item">
+                            <label>RMU</label>
+                            <div class="select-wrapper">
+                                <select id="rmuFilter">
+                                    <option value="">All RMUs</option>
+                                    <!-- 动态加载选项 -->
+                                </select>
+                                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-modal-footer">
+                <button class="action-btn" id="resetFilters">Reset</button>
+                <button class="action-btn primary" id="applyFilters">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
