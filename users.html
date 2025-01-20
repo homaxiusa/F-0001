@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - FOS</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/users.css">
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-logo">
+            <img src="images/logo.png" alt="FOS" width="80" height="40">
+        </div>
+        <div class="header-center">
+            <h1>Facility Operation Services</h1>
+            <p>Your Trusted Remote Monitoring Solution</p>
+        </div>
+        <div class="header-right">
+            <span>Welcome</span>
+            <button class="sign-out-btn">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="dashboard0.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="site11.html" class="nav-link">Sites</a>
+            </li>
+            <li class="nav-item">
+                <a href="rmu-001.html" class="nav-link">RMUs</a>
+            </li>
+            <li class="nav-item">
+                <a href="device.html" class="nav-link">Devices</a>
+            </li>
+            <li class="nav-item">
+                <a href="users.html" class="nav-link active">Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <!-- 用户管理工具栏 -->
+            <div class="users-toolbar">
+                <div class="search-section">
+                    <div class="search-input">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <input type="text" placeholder="Search users...">
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn primary" id="addUserBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add User
+                    </button>
+                </div>
+            </div>
+
+            <!-- 用户列表 -->
+            <div class="users-list">
+                <div class="users-table">
+                    <div class="table-header">
+                        <div class="header-cell">
+                            <input type="checkbox" class="select-all">
+                        </div>
+                        <div class="header-cell">Name</div>
+                        <div class="header-cell">Email</div>
+                        <div class="header-cell">Role</div>
+                        <div class="header-cell">Status</div>
+                        <div class="header-cell">Last Login</div>
+                        <div class="header-cell">Actions</div>
+                    </div>
+                    <div class="table-body">
+                        <!-- 用户行将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 分页控件 -->
+                <div class="pagination">
+                    <div class="pagination-info">
+                        Showing <span>1-10</span> of <span>100</span> users
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="page-btn" data-action="prev" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="page-numbers">
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                        </div>
+                        <button class="page-btn" data-action="next">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加/编辑用户模态框 -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <button class="close-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <form class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select id="role" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="admin">Administrator</option>
+                            <option value="manager">Manager</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button class="btn secondary" data-action="cancel">Cancel</button>
+                <button class="btn primary" data-action="save">Save User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 FOS Company. All rights reserved.</p>
+        <p class="footer-powered">Powered by Homaxi Inc</p>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/users.js"></script>
+</body>
+</html> 
