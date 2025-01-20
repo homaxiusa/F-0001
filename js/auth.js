@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 await new Promise(resolve => setTimeout(resolve, 1500));
 
                 // 注册成功后重定向到登录页面
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
                 
             } catch (error) {
                 console.error('Registration failed:', error);

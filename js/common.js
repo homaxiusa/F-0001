@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 清除用户信息
             localStorage.removeItem('userInfo');
             // 重定向到登录页面
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     }
 }); 
