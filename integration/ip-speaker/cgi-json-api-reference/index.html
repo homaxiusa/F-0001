@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IP Speaker CGI-JSON API Reference | Homaxi Developers</title><meta name="description" content="Commands, body formats, request examples, fields, and response behavior for Homaxi IP Speakers."><link rel="canonical" href="https://www.homaxi.us/integration/ip-speaker/cgi-json-api-reference/"><link rel="icon" href="/guard-watch/favicon.svg"><link rel="stylesheet" href="/integration/assets/docs.css"></head>
+<body><header class="topbar"><a class="brand" href="/integration/" aria-label="Homaxi Integration Hub"><img src="/guard-watch/homaxi-logo.png" alt="Homaxi"><span>Developers</span></a><nav aria-label="Global navigation"><a class="active" href="/integration/">Documentation</a><a href="/guard-watch/">GuardWatch</a><a href="mailto:sales@homaxi.com">Contact</a></nav><button class="mobile-menu" type="button" data-menu aria-label="Open documentation menu"><span></span><span></span></button></header><div class="docs-frame"><aside class="docs-sidebar" data-sidebar><a class="sidebar-home " href="/integration/"><span class="home-icon">⌂</span>Documentation home</a><div class="sidebar-group"><p>IP Speaker</p><a class="" href="/integration/ip-speaker/integration-guide/">Integration Guide</a><a class="current" href="/integration/ip-speaker/cgi-json-api-reference/">CGI-JSON API Reference</a></div><div class="sidebar-note"><strong>Need integration support?</strong><span>Include the device model, firmware, and a redacted request/response.</span><a href="mailto:sales@homaxi.com">Contact Homaxi →</a></div></aside><main class="docs-main"><article class="doc-article" id="top"><div class="breadcrumbs"><a href="/integration/">Documentation</a><span>/</span><span>IP Speaker</span><span>/</span><strong>API reference</strong></div><div class="doc-status"><span>API reference</span><span>English</span><span>v1.0</span><span>Updated Sep 3, 2026</span></div><h1 id="homaxi-ip-speaker-cgi-json-api-reference">Homaxi IP Speaker — CGI-JSON API Reference<a class="heading-anchor" href="#homaxi-ip-speaker-cgi-json-api-reference" aria-label="Link to Homaxi IP Speaker — CGI-JSON API Reference">#</a></h1>
+<p><strong>Document type:</strong> Customer technical reference <strong>Protocol family:</strong> Qualvision / Homaxi CGI-JSON (VR006) <strong>Applies to:</strong> IP Speaker (IPS) devices <strong>Transport:</strong> HTTP <code>POST</code> · Digest authentication · JSON body <strong>Language:</strong> English <strong>Version:</strong> 1.0 · 2026-09-03</p>
+<hr>
+<h2 id="1-overview">1. Overview<a class="heading-anchor" href="#1-overview" aria-label="Link to 1. Overview">#</a></h2>
+<p>This document describes the CGI-JSON APIs used to configure and control Homaxi <strong>IP Speaker (IPS)</strong> devices over the local network (or an authorized bridge / VPN path).</p>
+<p>Typical capabilities:</p>
+<div class="table-wrap"><table><thead><tr><th>Capability</th><th>Purpose</th></tr></thead><tbody><tr><td>SIP</td><td>Register to a PBX / SIP server for live voice calls</td></tr><tr><td>MQTT</td><td>Join an MQTT PA / broadcast control plane</td></tr><tr><td>Multicast</td><td>Receive LAN multicast audio streams</td></tr><tr><td>HTTP URL play</td><td>Allow playback triggered via web URL mode</td></tr><tr><td>Alarm audio (Whistle)</td><td>List / play / upload / manage announcement files</td></tr><tr><td>Volume</td><td>Set mic / alarm playback volume</td></tr><tr><td>Scheduled broadcast</td><td>Time-based announcement schedules</td></tr><tr><td>Priority</td><td>Resolve conflicts when multiple broadcast sources overlap</td></tr></tbody></table></div>
+<blockquote><p><strong>Security note</strong></p><p>Device Digest credentials must be handled only by authorized backend / monitoring bridges. Do not embed speaker passwords in browser clients or public apps.</p></blockquote>
+<hr>
+<h2 id="2-communication-basics">2. Communication basics<a class="heading-anchor" href="#2-communication-basics" aria-label="Link to 2. Communication basics">#</a></h2>
+<h3 id="2-1-endpoint">2.1 Endpoint<a class="heading-anchor" href="#2-1-endpoint" aria-label="Link to 2.1 Endpoint">#</a></h3>
+<div class="table-wrap"><table><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody><tr><td>URL</td><td><code>http://&lt;device-ip&gt;/tdkcgi</code></td></tr><tr><td>Method</td><td><code>POST</code></td></tr><tr><td>Auth</td><td>HTTP <strong>Digest</strong></td></tr><tr><td>Content-Type</td><td><code>application/json</code></td></tr><tr><td>Default HTTP port</td><td><code>80</code></td></tr></tbody></table></div>
+<p>Example:</p>
+<div class="code-block"><div class="code-label"><span>text</span><button type="button" data-copy-code>Copy</button></div><pre><code>POST http://192.168.1.50/tdkcgi</code></pre></div>
+<h3 id="2-2-two-request-body-styles">2.2 Two request body styles<a class="heading-anchor" href="#2-2-two-request-body-styles" aria-label="Link to 2.2 Two request body styles">#</a></h3>
+<p>IPS firmware uses <strong>two JSON styles</strong>. Use the style shown for each command.</p>
+<p><strong>A) Flat body</strong> (used by SIP / MQTT / HTTP URL / scheduled broadcast):</p>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+  &quot;body&quot;: {
+    &quot;command&quot;: &quot;g.network.mqtt&quot;,
+    &quot;content&quot;: {}
+  }
+}</code></pre></div>
+<p><strong>B) Envelope body</strong> (used by multicast / HTTPS cert / audio encode / whistle):</p>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;get.encode.audio&quot;,
+      &quot;content&quot;: { &quot;channel&quot;: &quot;1&quot; }
+    }
+  }
+}</code></pre></div>
+<h3 id="2-3-success-failure">2.3 Success / failure<a class="heading-anchor" href="#2-3-success-failure" aria-label="Link to 2.3 Success / failure">#</a></h3>
+<div class="table-wrap"><table><thead><tr><th>Style</th><th>Success indicator</th></tr></thead><tbody><tr><td>Flat</td><td><code>&quot;error&quot;: 0</code></td></tr><tr><td>Envelope</td><td><code>&quot;envelope&quot;: { &quot;body&quot;: { &quot;error&quot;: &quot;0&quot; } }</code></td></tr></tbody></table></div>
+<p>Non-zero / <code>&quot;-1&quot;</code> means the command failed or is not supported in that body style.</p>
+<h3 id="2-4-curl-example">2.4 curl example<a class="heading-anchor" href="#2-4-curl-example" aria-label="Link to 2.4 curl example">#</a></h3>
+<div class="code-block"><div class="code-label"><span>bash</span><button type="button" data-copy-code>Copy</button></div><pre><code>curl -sS -X POST &quot;http://&lt;device-ip&gt;/tdkcgi&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --digest -u &quot;admin:&lt;PASSWORD&gt;&quot; \
+  -d @request.json</code></pre></div>
+<hr>
+<h2 id="3-api-groups-quick-index">3. API groups (quick index)<a class="heading-anchor" href="#3-api-groups-quick-index" aria-label="Link to 3. API groups (quick index)">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Group</th><th>Commands</th></tr></thead><tbody><tr><td>1</td><td>Network SIP</td><td><code>g.network.sip</code> · <code>s.network.sip</code></td></tr><tr><td>2</td><td>Network MQTT</td><td><code>g.network.mqtt</code> · <code>s.network.mqtt</code></td></tr><tr><td>3</td><td>Network Multicast (IPS)</td><td><code>get.network.multicast</code> · <code>set.network.multicast</code></td></tr><tr><td>4</td><td>Network HTTP URL</td><td><code>g.network.httpurl</code> · <code>s.network.httpurl</code></td></tr><tr><td>5</td><td>HTTPS certificate</td><td><code>get/set.network.https.certificate.status</code></td></tr><tr><td>6</td><td>Audio encode &amp; volume</td><td><code>get.encode.audio</code> · <code>set.encode.audio</code> · <code>g.audio.samplerate</code></td></tr><tr><td>7</td><td>Alarm audio (Whistle)</td><td><code>get.whistle.list</code> · <code>get.whistle.ctrlstate</code> · <code>set.whistle.list</code></td></tr><tr><td>8</td><td>Scheduled broadcast</td><td><code>get/set.scheduledbroadcast.*</code> · <code>get/set.broadcast.priority</code></td></tr><tr><td>9</td><td>Siren / warning light</td><td>Alarm-linkage fields (not standalone play APIs)</td></tr></tbody></table></div>
+<hr>
+<h2 id="4-network-sip">4. Network SIP<a class="heading-anchor" href="#4-network-sip" aria-label="Link to 4. Network SIP">#</a></h2>
+<p><strong>Body style:</strong> flat <strong>Purpose:</strong> Configure SIP registration for live two-way / one-way voice.</p>
+<h3 id="4-1-get-g-network-sip">4.1 Get — <code>g.network.sip</code><a class="heading-anchor" href="#4-1-get-g-network-sip" aria-label="Link to 4.1 Get — g.network.sip">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+  &quot;body&quot;: {
+    &quot;command&quot;: &quot;g.network.sip&quot;,
+    &quot;content&quot;: {}
+  }
+}</code></pre></div>
+<p>Example response (newer firmware may return multiple accounts):</p>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;error&quot;: 0,
+  &quot;network&quot;: {
+    &quot;sip&quot;: {
+      &quot;enable&quot;: 0,
+      &quot;selected_index&quot;: 0,
+      &quot;user_agent&quot;: [
+        {
+          &quot;index&quot;: 0,
+          &quot;DisplayName&quot;: &quot;&quot;,
+          &quot;ServerSipAddress&quot;: &quot;192.168.5.139&quot;,
+          &quot;ServerSipPort&quot;: 5060,
+          &quot;SipUserName&quot;: &quot;&quot;,
+          &quot;SipPassword&quot;: &quot;&quot;,
+          &quot;TransProtocol&quot;: 0
+        }
+      ]
+    }
+  },
+  &quot;ver&quot;: 1
+}</code></pre></div>
+<h3 id="4-2-set-s-network-sip">4.2 Set — <code>s.network.sip</code><a class="heading-anchor" href="#4-2-set-s-network-sip" aria-label="Link to 4.2 Set — s.network.sip">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+  &quot;body&quot;: {
+    &quot;command&quot;: &quot;s.network.sip&quot;,
+    &quot;content&quot;: {
+      &quot;sip&quot;: {
+        &quot;enable&quot;: true,
+        &quot;ServerSipAddress&quot;: &quot;192.168.1.10&quot;,
+        &quot;ServerSipPort&quot;: 5060,
+        &quot;TransProtocol&quot;: 0,
+        &quot;SipUserName&quot;: &quot;6001&quot;,
+        &quot;SipPassword&quot;: &quot;&lt;sip-password&gt;&quot;,
+        &quot;DisplayName&quot;: &quot;6001&quot;
+      }
+    }
+  }
+}</code></pre></div>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td><code>enable</code></td><td>Enable / disable SIP registration</td></tr><tr><td><code>ServerSipAddress</code></td><td>SIP server IP or hostname</td></tr><tr><td><code>ServerSipPort</code></td><td>SIP port (default <code>5060</code>)</td></tr><tr><td><code>TransProtocol</code></td><td>Transport (commonly <code>0</code> = UDP)</td></tr><tr><td><code>SipUserName</code> / <code>SipPassword</code></td><td>SIP credentials</td></tr><tr><td><code>DisplayName</code></td><td>Caller ID display name</td></tr></tbody></table></div>
+<hr>
+<h2 id="5-network-mqtt">5. Network MQTT<a class="heading-anchor" href="#5-network-mqtt" aria-label="Link to 5. Network MQTT">#</a></h2>
+<p><strong>Body style:</strong> flat <strong>Purpose:</strong> Configure the speaker as an MQTT client for remote PA / MQTT broadcast control.</p>
+<blockquote><p>Writing MQTT settings only configures the client. Actual audio playback also requires a reachable MQTT broker and a valid broadcast publish from the PA platform.</p></blockquote>
+<h3 id="5-1-get-g-network-mqtt">5.1 Get — <code>g.network.mqtt</code><a class="heading-anchor" href="#5-1-get-g-network-mqtt" aria-label="Link to 5.1 Get — g.network.mqtt">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+  &quot;body&quot;: {
+    &quot;command&quot;: &quot;g.network.mqtt&quot;,
+    &quot;content&quot;: {}
+  }
+}</code></pre></div>
+<p>Example response:</p>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;error&quot;: 0,
+  &quot;network&quot;: {
+    &quot;mqtt&quot;: {
+      &quot;enable&quot;: 0,
+      &quot;name&quot;: &quot;IP Speaker&quot;,
+      &quot;serverIP&quot;: &quot;192.168.5.139&quot;,
+      &quot;serverPort&quot;: 1883,
+      &quot;speaker_no&quot;: 100
+    }
+  },
+  &quot;ver&quot;: 1
+}</code></pre></div>
+<h3 id="5-2-set-s-network-mqtt">5.2 Set — <code>s.network.mqtt</code><a class="heading-anchor" href="#5-2-set-s-network-mqtt" aria-label="Link to 5.2 Set — s.network.mqtt">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+  &quot;body&quot;: {
+    &quot;command&quot;: &quot;s.network.mqtt&quot;,
+    &quot;content&quot;: {
+      &quot;mqtt&quot;: {
+        &quot;enable&quot;: 1,
+        &quot;serverIP&quot;: &quot;192.168.1.20&quot;,
+        &quot;serverPort&quot;: 1883,
+        &quot;speaker_no&quot;: 100,
+        &quot;name&quot;: &quot;IP Speaker&quot;,
+        &quot;interrupt&quot;: 1,
+        &quot;group_no&quot;: 700
+      }
+    }
+  }
+}</code></pre></div>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td><code>enable</code></td><td><code>0</code> = off, <code>1</code> = connect to broker</td></tr><tr><td><code>serverIP</code> / <code>serverPort</code></td><td>MQTT broker address</td></tr><tr><td><code>speaker_no</code></td><td>Speaker ID used by the PA system</td></tr><tr><td><code>name</code></td><td>Display name</td></tr><tr><td><code>group_no</code></td><td>Group ID for group broadcasts</td></tr><tr><td><code>interrupt</code></td><td>Allow new MQTT broadcast to interrupt current playback</td></tr><tr><td><code>group_range</code></td><td>Often returned on GET (allowed group range)</td></tr></tbody></table></div>
+<hr>
+<h2 id="6-network-multicast-ips">6. Network Multicast (IPS)<a class="heading-anchor" href="#6-network-multicast-ips" aria-label="Link to 6. Network Multicast (IPS)">#</a></h2>
+<p><strong>Body style:</strong> envelope <strong>Purpose:</strong> Configure up to 10 multicast receive slots (<code>id</code> 0–9).</p>
+<h3 id="6-1-get-get-network-multicast">6.1 Get — <code>get.network.multicast</code><a class="heading-anchor" href="#6-1-get-get-network-multicast" aria-label="Link to 6.1 Get — get.network.multicast">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;get.network.multicast&quot;,
+      &quot;content&quot;: &quot;&quot;
+    }
+  }
+}</code></pre></div>
+<h3 id="6-2-set-set-network-multicast">6.2 Set — <code>set.network.multicast</code><a class="heading-anchor" href="#6-2-set-set-network-multicast" aria-label="Link to 6.2 Set — set.network.multicast">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;set.network.multicast&quot;,
+      &quot;content&quot;: {
+        &quot;network&quot;: {
+          &quot;multicast&quot;: [
+            { &quot;id&quot;: 0, &quot;ipaddr&quot;: &quot;239.255.0.1:5004&quot; },
+            { &quot;id&quot;: 1, &quot;ipaddr&quot;: &quot;&quot; }
+          ]
+        }
+      }
+    }
+  }
+}</code></pre></div>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td><code>id</code></td><td>Slot index (0–9)</td></tr><tr><td><code>ipaddr</code></td><td>Multicast <code>ip:port</code>, or empty / null to clear</td></tr></tbody></table></div>
+<hr>
+<h2 id="7-network-http-url">7. Network HTTP URL<a class="heading-anchor" href="#7-network-http-url" aria-label="Link to 7. Network HTTP URL">#</a></h2>
+<p><strong>Body style:</strong> flat <strong>Purpose:</strong> Enable/disable HTTP URL playback mode (play audio by accessing a device web URL path).</p>
+<h3 id="7-1-get-g-network-httpurl">7.1 Get — <code>g.network.httpurl</code><a class="heading-anchor" href="#7-1-get-g-network-httpurl" aria-label="Link to 7.1 Get — g.network.httpurl">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+  &quot;body&quot;: {
+    &quot;command&quot;: &quot;g.network.httpurl&quot;,
+    &quot;content&quot;: {}
+  }
+}</code></pre></div>
+<h3 id="7-2-set-s-network-httpurl">7.2 Set — <code>s.network.httpurl</code><a class="heading-anchor" href="#7-2-set-s-network-httpurl" aria-label="Link to 7.2 Set — s.network.httpurl">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+  &quot;body&quot;: {
+    &quot;command&quot;: &quot;s.network.httpurl&quot;,
+    &quot;content&quot;: { &quot;enable&quot;: 1 }
+  }
+}</code></pre></div>
+<hr>
+<h2 id="8-https-certificate-status">8. HTTPS certificate status<a class="heading-anchor" href="#8-https-certificate-status" aria-label="Link to 8. HTTPS certificate status">#</a></h2>
+<p><strong>Body style:</strong> envelope <strong>Purpose:</strong> Query / set HTTPS certificate status on IPS.</p>
+<p>Commands:</p>
+<ul><li><code>get.network.https.certificate.status</code></li><li><code>set.network.https.certificate.status</code></li></ul>
+<p>Key fields: <code>certificate</code>, <code>certificaterequest</code>, <code>enable</code>.</p>
+<hr>
+<h2 id="9-audio-encode-and-volume">9. Audio encode and volume<a class="heading-anchor" href="#9-audio-encode-and-volume" aria-label="Link to 9. Audio encode and volume">#</a></h2>
+<p><strong>Body style:</strong> envelope <strong>Purpose:</strong> Read/set codec, input source, mic volume, and alarm audio volume.</p>
+<h3 id="9-1-get-get-encode-audio">9.1 Get — <code>get.encode.audio</code><a class="heading-anchor" href="#9-1-get-get-encode-audio" aria-label="Link to 9.1 Get — get.encode.audio">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;get.encode.audio&quot;,
+      &quot;content&quot;: { &quot;channel&quot;: &quot;1&quot; }
+    }
+  }
+}</code></pre></div>
+<h3 id="9-2-set-set-encode-audio">9.2 Set — <code>set.encode.audio</code><a class="heading-anchor" href="#9-2-set-set-encode-audio" aria-label="Link to 9.2 Set — set.encode.audio">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;set.encode.audio&quot;,
+      &quot;content&quot;: {
+        &quot;channel&quot;: {
+          &quot;id&quot;: &quot;1&quot;,
+          &quot;audioformat&quot;: {
+            &quot;encode&quot;: { &quot;currvalue&quot;: &quot;g711u&quot; },
+            &quot;input&quot;: { &quot;value&quot;: &quot;line&quot; },
+            &quot;volume&quot;: { &quot;value&quot;: &quot;100&quot; },
+            &quot;alarmaudiovolume&quot;: { &quot;value&quot;: &quot;50&quot; },
+            &quot;noisereduce&quot;: &quot;true&quot;
+          }
+        }
+      }
+    }
+  }
+}</code></pre></div>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td><code>encode</code></td><td>Codec (<code>g711</code> / <code>g711u</code> / <code>g722</code> depending on FW)</td></tr><tr><td><code>input</code></td><td><code>line</code> or <code>mic</code></td></tr><tr><td><code>volume</code></td><td>Input / mic volume (<code>0</code>–<code>100</code>)</td></tr><tr><td><code>alarmaudiovolume</code></td><td>Alarm / announcement playback volume (<code>0</code>–<code>100</code>)</td></tr><tr><td><code>newoutvolume</code></td><td>Voice output volume on some FW builds (may be absent)</td></tr><tr><td><code>noisereduce</code></td><td>Noise reduction on/off</td></tr></tbody></table></div>
+<h3 id="9-3-sample-rate-g-audio-samplerate">9.3 Sample rate — <code>g.audio.samplerate</code><a class="heading-anchor" href="#9-3-sample-rate-g-audio-samplerate" aria-label="Link to 9.3 Sample rate — g.audio.samplerate">#</a></h3>
+<p>Typical response: <code>rate = 8000</code>.</p>
+<hr>
+<h2 id="10-alarm-audio-whistle">10. Alarm audio (Whistle)<a class="heading-anchor" href="#10-alarm-audio-whistle" aria-label="Link to 10. Alarm audio (Whistle)">#</a></h2>
+<p><strong>Body style:</strong> envelope <strong>Purpose:</strong> Manage and play on-device announcement files.</p>
+<h3 id="10-1-list-files-get-whistle-list">10.1 List files — <code>get.whistle.list</code><a class="heading-anchor" href="#10-1-list-files-get-whistle-list" aria-label="Link to 10.1 List files — get.whistle.list">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;get.whistle.list&quot;,
+      &quot;content&quot;: { &quot;channel&quot;: &quot;1&quot; }
+    }
+  }
+}</code></pre></div>
+<p>Notes:</p>
+<ul><li>When only one file exists, <code>file</code> may be returned as an <strong>object</strong> (not an array).</li><li>When multiple files exist, <code>file</code> is typically an <strong>array</strong>.</li><li>Integrators should support both shapes.</li></ul>
+<p>Useful response fields: <code>filenum</code>, <code>filemax</code>, <code>freespace</code>, <code>uploadmax</code>, <code>supportselect</code>.</p>
+<h3 id="10-2-recording-state-get-whistle-ctrlstate">10.2 Recording state — <code>get.whistle.ctrlstate</code><a class="heading-anchor" href="#10-2-recording-state-get-whistle-ctrlstate" aria-label="Link to 10.2 Recording state — get.whistle.ctrlstate">#</a></h3>
+<p>Returns recording control state (<code>ctrlstate</code>, e.g. <code>&quot;-1&quot;</code> = idle).</p>
+<h3 id="10-3-control-files-set-whistle-list">10.3 Control files — <code>set.whistle.list</code><a class="heading-anchor" href="#10-3-control-files-set-whistle-list" aria-label="Link to 10.3 Control files — set.whistle.list">#</a></h3>
+<p>All file operations use one command with different <code>ctrl</code> values:</p>
+<div class="table-wrap"><table><thead><tr><th><code>ctrl</code></th><th>Operation</th><th>Required fields</th></tr></thead><tbody><tr><td><code>&quot;0&quot;</code></td><td><strong>Play</strong></td><td><code>name</code></td></tr><tr><td><code>&quot;1&quot;</code></td><td>Download</td><td><code>name</code></td></tr><tr><td><code>&quot;2&quot;</code></td><td>Rename</td><td><code>name</code>, <code>namenew</code></td></tr><tr><td><code>&quot;3&quot;</code></td><td>Delete</td><td><code>name</code></td></tr><tr><td><code>&quot;4&quot;</code></td><td>Record from mic</td><td><code>name</code>, <code>start</code></td></tr><tr><td><code>&quot;5&quot;</code></td><td>Upload</td><td><code>name</code>, <code>whistle</code> (binary), optional <code>transcode</code></td></tr><tr><td><code>&quot;7&quot;</code></td><td>Set as active alarm audio</td><td><code>name</code></td></tr></tbody></table></div>
+<h4 id="play-example">Play example<a class="heading-anchor" href="#play-example" aria-label="Link to Play example">#</a></h4>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;set.whistle.list&quot;,
+      &quot;content&quot;: {
+        &quot;channel&quot;: {
+          &quot;id&quot;: &quot;1&quot;,
+          &quot;whistlelist&quot;: {
+            &quot;ctrl&quot;: &quot;0&quot;,
+            &quot;name&quot;: &quot;Crowded please be cautious(man).mp3&quot;,
+            &quot;readonly&quot;: &quot;false&quot;
+          }
+        }
+      }
+    }
+  }
+}</code></pre></div>
+<h4 id="upload-example">Upload example<a class="heading-anchor" href="#upload-example" aria-label="Link to Upload example">#</a></h4>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;set.whistle.list&quot;,
+      &quot;content&quot;: {
+        &quot;channel&quot;: {
+          &quot;id&quot;: &quot;1&quot;,
+          &quot;whistlelist&quot;: {
+            &quot;ctrl&quot;: &quot;5&quot;,
+            &quot;name&quot;: &quot;custom_alert.mp3&quot;,
+            &quot;whistle&quot;: &quot;&lt;binary-audio-data&gt;&quot;,
+            &quot;transcode&quot;: &quot;true&quot;
+          }
+        }
+      }
+    }
+  }
+}</code></pre></div>
+<p>Upload size limit is reported by <code>uploadmax</code> on the device (varies by firmware).</p>
+<hr>
+<h2 id="11-scheduled-broadcast">11. Scheduled broadcast<a class="heading-anchor" href="#11-scheduled-broadcast" aria-label="Link to 11. Scheduled broadcast">#</a></h2>
+<p><strong>Body style:</strong> flat <strong>Purpose:</strong> Create time-based announcement schedules and manage broadcast priority.</p>
+<h3 id="11-1-commands">11.1 Commands<a class="heading-anchor" href="#11-1-commands" aria-label="Link to 11.1 Commands">#</a></h3>
+<div class="table-wrap"><table><thead><tr><th>Command</th><th>Action</th></tr></thead><tbody><tr><td><code>get.scheduledbroadcast.all</code></td><td>List all schedules</td></tr><tr><td><code>get.scheduledbroadcast.single</code></td><td>Get one schedule by <code>id</code></td></tr><tr><td><code>set.scheduledbroadcast.add</code></td><td>Add schedule</td></tr><tr><td><code>set.scheduledbroadcast.update</code></td><td>Update schedule</td></tr><tr><td><code>set.scheduledbroadcast.delete</code></td><td>Delete by <code>id</code></td></tr><tr><td><code>set.scheduledbroadcast.save</code></td><td>Batch enable/save</td></tr><tr><td><code>get.broadcast.priority</code></td><td>Read priority table</td></tr><tr><td><code>set.broadcast.priority</code></td><td>Write priority table</td></tr></tbody></table></div>
+<h3 id="11-2-priority-sources-typical">11.2 Priority sources (typical)<a class="heading-anchor" href="#11-2-priority-sources-typical" aria-label="Link to 11.2 Priority sources (typical)">#</a></h3>
+<p>Higher number = higher priority. Exact keys may vary by firmware.</p>
+<div class="table-wrap"><table><thead><tr><th>Key</th><th>Name</th></tr></thead><tbody><tr><td><code>onvif</code></td><td>ONVIF</td></tr><tr><td><code>mqtt</code> or <code>multicast</code></td><td>MQTT / Multicast broadcast</td></tr><tr><td><code>sip</code></td><td>SIP broadcast</td></tr><tr><td><code>schedule</code></td><td>Scheduled broadcast</td></tr><tr><td><code>alarmin</code></td><td>Alarm-triggered broadcast</td></tr><tr><td><code>manual</code></td><td>Manual broadcast</td></tr></tbody></table></div>
+<h3 id="11-3-schedule-fields">11.3 Schedule fields<a class="heading-anchor" href="#11-3-schedule-fields" aria-label="Link to 11.3 Schedule fields">#</a></h3>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td><code>broadcast_name</code></td><td>Display name</td></tr><tr><td><code>audio_name</code></td><td>On-device audio filename</td></tr><tr><td><code>enable</code></td><td><code>&quot;true&quot;</code> / <code>&quot;false&quot;</code></td></tr><tr><td><code>start_date</code> / <code>end_date</code></td><td>Active date range (<code>YYYY-MM-DD</code>)</td></tr><tr><td><code>volume</code></td><td>Playback volume <code>0</code>–<code>100</code></td></tr><tr><td><code>priority</code></td><td>Schedule priority</td></tr><tr><td><code>cycle.mode</code> / <code>times</code> / <code>duration</code></td><td>Repeat behavior</td></tr><tr><td><code>schedule.&lt;weekday&gt;.time1–6</code></td><td>Time windows with <code>enabled</code>, <code>start</code>, <code>end</code></td></tr></tbody></table></div>
+<p>If no schedules exist, <code>get.scheduledbroadcast.all</code> may return <code>record: null</code>, and <code>get.scheduledbroadcast.single</code> may return <code>error: -1</code>.</p>
+<hr>
+<h2 id="12-siren-and-warning-light-alarm-linkage">12. Siren and warning light (alarm linkage)<a class="heading-anchor" href="#12-siren-and-warning-light-alarm-linkage" aria-label="Link to 12. Siren and warning light (alarm linkage)">#</a></h2>
+<p>These are usually <strong>fields inside event/alarm linkage</strong> payloads (motion, line crossing, etc.), not standalone “play now” APIs.</p>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td><code>warninglight</code></td><td>Enable warning light on alarm</td></tr><tr><td><code>warninglightdelay</code></td><td>Light duration (seconds)</td></tr><tr><td><code>flickerfreq</code></td><td>Flicker frequency</td></tr><tr><td><code>whistle</code></td><td>Enable siren / alarm audio</td></tr><tr><td><code>whistleselect</code></td><td>Selected audio index</td></tr><tr><td><code>whistlecount</code></td><td>Play count</td></tr><tr><td><code>whistlelist</code></td><td>Available audio list (string)</td></tr></tbody></table></div>
+<p>For immediate announcement playback during integration, prefer <strong><code>set.whistle.list</code> with <code>ctrl=0</code></strong>.</p>
+<hr>
+<h2 id="13-built-in-announcement-examples">13. Built-in announcement examples<a class="heading-anchor" href="#13-built-in-announcement-examples" aria-label="Link to 13. Built-in announcement examples">#</a></h2>
+<p>Many IPS units ship with English prompt files such as:</p>
+<ul><li><code>Crowded please be cautious(man).mp3</code> / <code>(woman).mp3</code></li><li><code>Danger zone please keep away(man).mp3</code> / <code>(woman).mp3</code></li><li><code>Private area Do not enter(man).mp3</code> / <code>(woman).mp3</code></li><li><code>Welcome(man).mp3</code> / <code>(woman).mp3</code></li><li><code>alarm.wav</code></li></ul>
+<p>Exact inventory depends on model and site provisioning. Always query <code>get.whistle.list</code> at runtime.</p>
+<hr>
+<h2 id="14-command-cheat-sheet">14. Command cheat sheet<a class="heading-anchor" href="#14-command-cheat-sheet" aria-label="Link to 14. Command cheat sheet">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>Command</th><th>Direction</th><th>Body style</th></tr></thead><tbody><tr><td><code>g.network.sip</code></td><td>GET</td><td>flat</td></tr><tr><td><code>s.network.sip</code></td><td>SET</td><td>flat</td></tr><tr><td><code>g.network.mqtt</code></td><td>GET</td><td>flat</td></tr><tr><td><code>s.network.mqtt</code></td><td>SET</td><td>flat</td></tr><tr><td><code>get.network.multicast</code></td><td>GET</td><td>envelope</td></tr><tr><td><code>set.network.multicast</code></td><td>SET</td><td>envelope</td></tr><tr><td><code>g.network.httpurl</code></td><td>GET</td><td>flat</td></tr><tr><td><code>s.network.httpurl</code></td><td>SET</td><td>flat</td></tr><tr><td><code>get.network.https.certificate.status</code></td><td>GET</td><td>envelope</td></tr><tr><td><code>set.network.https.certificate.status</code></td><td>SET</td><td>envelope</td></tr><tr><td><code>get.encode.audio</code></td><td>GET</td><td>envelope</td></tr><tr><td><code>set.encode.audio</code></td><td>SET</td><td>envelope</td></tr><tr><td><code>g.audio.samplerate</code></td><td>GET</td><td>envelope</td></tr><tr><td><code>get.whistle.list</code></td><td>GET</td><td>envelope</td></tr><tr><td><code>get.whistle.ctrlstate</code></td><td>GET</td><td>envelope</td></tr><tr><td><code>set.whistle.list</code></td><td>SET</td><td>envelope</td></tr><tr><td><code>get.scheduledbroadcast.all</code></td><td>GET</td><td>flat</td></tr><tr><td><code>get.scheduledbroadcast.single</code></td><td>GET</td><td>flat</td></tr><tr><td><code>set.scheduledbroadcast.add/update/delete/save</code></td><td>SET</td><td>flat</td></tr><tr><td><code>get.broadcast.priority</code></td><td>GET</td><td>flat</td></tr><tr><td><code>set.broadcast.priority</code></td><td>SET</td><td>flat</td></tr></tbody></table></div>
+<hr>
+<h2 id="15-related-documents">15. Related documents<a class="heading-anchor" href="#15-related-documents" aria-label="Link to 15. Related documents">#</a></h2>
+<ul><li><strong>Integration Guide (English):</strong> <code>Homaxi_IP_Speaker_Integration_Guide_EN.md</code></li><li>Source protocol: Qualvision CGI-JSON Protocol VR006 (vendor manual)</li></ul>
+<hr>
+<p><em>Homaxi · IP Speaker CGI-JSON API Reference · English · v1.0</em></p><nav class="doc-pagination" aria-label="Document navigation"><a href="/integration/ip-speaker/integration-guide/"><small>Previous</small>← Integration Guide</a><span></span></nav></article></main><aside class="page-toc"><p>On this page</p><a class="toc-2" href="#1-overview">1. Overview</a><a class="toc-2" href="#2-communication-basics">2. Communication basics</a><a class="toc-3" href="#2-1-endpoint">2.1 Endpoint</a><a class="toc-3" href="#2-2-two-request-body-styles">2.2 Two request body styles</a><a class="toc-3" href="#2-3-success-failure">2.3 Success / failure</a><a class="toc-3" href="#2-4-curl-example">2.4 curl example</a><a class="toc-2" href="#3-api-groups-quick-index">3. API groups (quick index)</a><a class="toc-2" href="#4-network-sip">4. Network SIP</a><a class="toc-3" href="#4-1-get-g-network-sip">4.1 Get — g.network.sip</a><a class="toc-3" href="#4-2-set-s-network-sip">4.2 Set — s.network.sip</a><a class="toc-2" href="#5-network-mqtt">5. Network MQTT</a><a class="toc-3" href="#5-1-get-g-network-mqtt">5.1 Get — g.network.mqtt</a><a class="toc-3" href="#5-2-set-s-network-mqtt">5.2 Set — s.network.mqtt</a><a class="toc-2" href="#6-network-multicast-ips">6. Network Multicast (IPS)</a><a class="toc-3" href="#6-1-get-get-network-multicast">6.1 Get — get.network.multicast</a><a class="toc-3" href="#6-2-set-set-network-multicast">6.2 Set — set.network.multicast</a><a class="toc-2" href="#7-network-http-url">7. Network HTTP URL</a><a class="toc-3" href="#7-1-get-g-network-httpurl">7.1 Get — g.network.httpurl</a><a class="toc-3" href="#7-2-set-s-network-httpurl">7.2 Set — s.network.httpurl</a><a class="toc-2" href="#8-https-certificate-status">8. HTTPS certificate status</a><a class="toc-2" href="#9-audio-encode-and-volume">9. Audio encode and volume</a><a class="toc-3" href="#9-1-get-get-encode-audio">9.1 Get — get.encode.audio</a><a class="toc-3" href="#9-2-set-set-encode-audio">9.2 Set — set.encode.audio</a><a class="toc-3" href="#9-3-sample-rate-g-audio-samplerate">9.3 Sample rate — g.audio.samplerate</a><a class="toc-2" href="#10-alarm-audio-whistle">10. Alarm audio (Whistle)</a><a class="toc-3" href="#10-1-list-files-get-whistle-list">10.1 List files — get.whistle.list</a><a class="toc-3" href="#10-2-recording-state-get-whistle-ctrlstate">10.2 Recording state — get.whistle.ctrlstate</a><a class="toc-3" href="#10-3-control-files-set-whistle-list">10.3 Control files — set.whistle.list</a><a class="toc-2" href="#11-scheduled-broadcast">11. Scheduled broadcast</a><a class="toc-3" href="#11-1-commands">11.1 Commands</a><a class="toc-3" href="#11-2-priority-sources-typical">11.2 Priority sources (typical)</a><a class="toc-3" href="#11-3-schedule-fields">11.3 Schedule fields</a><a class="toc-2" href="#12-siren-and-warning-light-alarm-linkage">12. Siren and warning light (alarm linkage)</a><a class="toc-2" href="#13-built-in-announcement-examples">13. Built-in announcement examples</a><a class="toc-2" href="#14-command-cheat-sheet">14. Command cheat sheet</a><a class="toc-2" href="#15-related-documents">15. Related documents</a><a class="toc-top" href="#top">Back to top ↑</a></aside></div><div class="menu-backdrop" data-backdrop></div><script src="/integration/assets/docs.js" defer></script></body></html>

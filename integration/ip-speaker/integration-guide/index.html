@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IP Speaker Integration Guide | Homaxi Developers</title><meta name="description" content="Connect, authenticate, set volume, and play an on-device announcement through CGI-JSON."><link rel="canonical" href="https://www.homaxi.us/integration/ip-speaker/integration-guide/"><link rel="icon" href="/guard-watch/favicon.svg"><link rel="stylesheet" href="/integration/assets/docs.css"></head>
+<body><header class="topbar"><a class="brand" href="/integration/" aria-label="Homaxi Integration Hub"><img src="/guard-watch/homaxi-logo.png" alt="Homaxi"><span>Developers</span></a><nav aria-label="Global navigation"><a class="active" href="/integration/">Documentation</a><a href="/guard-watch/">GuardWatch</a><a href="mailto:sales@homaxi.com">Contact</a></nav><button class="mobile-menu" type="button" data-menu aria-label="Open documentation menu"><span></span><span></span></button></header><div class="docs-frame"><aside class="docs-sidebar" data-sidebar><a class="sidebar-home " href="/integration/"><span class="home-icon">⌂</span>Documentation home</a><div class="sidebar-group"><p>IP Speaker</p><a class="current" href="/integration/ip-speaker/integration-guide/">Integration Guide</a><a class="" href="/integration/ip-speaker/cgi-json-api-reference/">CGI-JSON API Reference</a></div><div class="sidebar-note"><strong>Need integration support?</strong><span>Include the device model, firmware, and a redacted request/response.</span><a href="mailto:sales@homaxi.com">Contact Homaxi →</a></div></aside><main class="docs-main"><article class="doc-article" id="top"><div class="breadcrumbs"><a href="/integration/">Documentation</a><span>/</span><span>IP Speaker</span><span>/</span><strong>Integration guide</strong></div><div class="doc-status"><span>Integration guide</span><span>English</span><span>v1.0</span><span>Updated Sep 3, 2026</span></div><h1 id="homaxi-ip-speaker-integration-guide">Homaxi IP Speaker — Integration Guide<a class="heading-anchor" href="#homaxi-ip-speaker-integration-guide" aria-label="Link to Homaxi IP Speaker — Integration Guide">#</a></h1>
+<p><strong>Audience:</strong> Monitoring partners · system integrators · authorized backend teams <strong>Language:</strong> English <strong>Version:</strong> 1.0 · 2026-09-03 <strong>Companion API reference:</strong> <a href="/integration/ip-speaker/cgi-json-api-reference/"><code>Homaxi_IP_Speaker_CGI_API_Reference_EN.md</code></a></p>
+<hr>
+<h2 id="1-purpose">1. Purpose<a class="heading-anchor" href="#1-purpose" aria-label="Link to 1. Purpose">#</a></h2>
+<p>This short guide explains how to integrate a Homaxi <strong>IP Speaker (IPS)</strong> into a site or monitoring workflow using CGI-JSON over LAN / VPN.</p>
+<p>It focuses on the most common integration path:</p>
+<ol><li>Discover / reach the speaker</li><li>Authenticate</li><li>List announcement files</li><li>Set volume</li><li>Play an announcement on demand</li></ol>
+<p>Advanced options (SIP, MQTT, multicast, schedules) are summarized at the end.</p>
+<hr>
+<h2 id="2-what-an-ip-speaker-can-do">2. What an IP Speaker can do<a class="heading-anchor" href="#2-what-an-ip-speaker-can-do" aria-label="Link to 2. What an IP Speaker can do">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>Feature</th><th>Typical use</th></tr></thead><tbody><tr><td><strong>On-demand play</strong></td><td>Monitoring operator / platform plays a stored prompt (“Private area…”)</td></tr><tr><td><strong>Volume control</strong></td><td>Adjust announcement loudness</td></tr><tr><td><strong>Custom audio upload</strong></td><td>Load site-specific prompts</td></tr><tr><td><strong>SIP</strong></td><td>Live talk-down from a PBX / softphone</td></tr><tr><td><strong>MQTT</strong></td><td>Remote PA via MQTT broker / broadcast platform</td></tr><tr><td><strong>Multicast</strong></td><td>LAN group audio streaming</td></tr><tr><td><strong>Scheduled broadcast</strong></td><td>Timed announcements (open/close hours, etc.)</td></tr></tbody></table></div>
+<hr>
+<h2 id="3-prerequisites">3. Prerequisites<a class="heading-anchor" href="#3-prerequisites" aria-label="Link to 3. Prerequisites">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>Item</th><th>Requirement</th></tr></thead><tbody><tr><td>Network</td><td>Integrator host can reach speaker IP (LAN, VPN, or authorized bridge)</td></tr><tr><td>Endpoint</td><td><code>http://&lt;speaker-ip&gt;/tdkcgi</code></td></tr><tr><td>Auth</td><td>HTTP Digest username/password (site-provisioned)</td></tr><tr><td>Tools</td><td><code>curl</code>, Postman, or any HTTP Digest client</td></tr><tr><td>Safety</td><td>Do <strong>not</strong> put Digest passwords in browser / public mobile apps</td></tr></tbody></table></div>
+<p>Example validated model family: <code>IPS05H10-EM</code> (confirm with <code>get.system.info</code> on your unit).</p>
+<hr>
+<h2 id="4-quick-start-5-steps">4. Quick start (5 steps)<a class="heading-anchor" href="#4-quick-start-5-steps" aria-label="Link to 4. Quick start (5 steps)">#</a></h2>
+<h3 id="step-1-confirm-device-reachability">Step 1 — Confirm device reachability<a class="heading-anchor" href="#step-1-confirm-device-reachability" aria-label="Link to Step 1 — Confirm device reachability">#</a></h3>
+<p>Open the speaker web UI:</p>
+<div class="code-block"><div class="code-label"><span>text</span><button type="button" data-copy-code>Copy</button></div><pre><code>http://&lt;speaker-ip&gt;/</code></pre></div>
+<p>Or query system info via CGI (envelope body):</p>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;get.system.info&quot;,
+      &quot;content&quot;: {}
+    }
+  }
+}</code></pre></div>
+<p>Success: HTTP 200 and <code>error = 0</code> (or <code>&quot;0&quot;</code>). Record: <strong>model</strong>, <strong>firmware version</strong>, <strong>MAC</strong>.</p>
+<h3 id="step-2-list-announcement-files">Step 2 — List announcement files<a class="heading-anchor" href="#step-2-list-announcement-files" aria-label="Link to Step 2 — List announcement files">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;get.whistle.list&quot;,
+      &quot;content&quot;: { &quot;channel&quot;: &quot;1&quot; }
+    }
+  }
+}</code></pre></div>
+<p>Pick a filename from the response (example):</p>
+<div class="code-block"><div class="code-label"><span>text</span><button type="button" data-copy-code>Copy</button></div><pre><code>Crowded please be cautious(man).mp3</code></pre></div>
+<p><strong>Implementation tip:</strong> if only one file exists, <code>file</code> may be a single object; if multiple exist, it is usually an array. Handle both.</p>
+<h3 id="step-3-set-announcement-volume-recommended">Step 3 — Set announcement volume (recommended)<a class="heading-anchor" href="#step-3-set-announcement-volume-recommended" aria-label="Link to Step 3 — Set announcement volume (recommended)">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;set.encode.audio&quot;,
+      &quot;content&quot;: {
+        &quot;channel&quot;: {
+          &quot;id&quot;: &quot;1&quot;,
+          &quot;audioformat&quot;: {
+            &quot;encode&quot;: { &quot;currvalue&quot;: &quot;g711u&quot; },
+            &quot;input&quot;: { &quot;value&quot;: &quot;line&quot; },
+            &quot;volume&quot;: { &quot;value&quot;: &quot;100&quot; },
+            &quot;alarmaudiovolume&quot;: { &quot;value&quot;: &quot;50&quot; },
+            &quot;noisereduce&quot;: &quot;true&quot;
+          }
+        }
+      }
+    }
+  }
+}</code></pre></div>
+<p>Then re-read with <code>get.encode.audio</code> to confirm <code>alarmaudiovolume</code>.</p>
+<blockquote><p>Start around <strong>40–60</strong> for indoor benches. Increase carefully for outdoor sites.</p></blockquote>
+<h3 id="step-4-play-announcement">Step 4 — Play announcement<a class="heading-anchor" href="#step-4-play-announcement" aria-label="Link to Step 4 — Play announcement">#</a></h3>
+<div class="code-block"><div class="code-label"><span>json</span><button type="button" data-copy-code>Copy</button></div><pre><code>{
+  &quot;envelope&quot;: {
+    &quot;header&quot;: { &quot;security&quot;: &quot;httpauth&quot; },
+    &quot;body&quot;: {
+      &quot;command&quot;: &quot;set.whistle.list&quot;,
+      &quot;content&quot;: {
+        &quot;channel&quot;: {
+          &quot;id&quot;: &quot;1&quot;,
+          &quot;whistlelist&quot;: {
+            &quot;ctrl&quot;: &quot;0&quot;,
+            &quot;name&quot;: &quot;Crowded please be cautious(man).mp3&quot;,
+            &quot;readonly&quot;: &quot;false&quot;
+          }
+        }
+      }
+    }
+  }
+}</code></pre></div>
+<p>Success: <code>error = &quot;0&quot;</code>. An on-site listener should hear the prompt.</p>
+<h3 id="step-5-curl-template">Step 5 — curl template<a class="heading-anchor" href="#step-5-curl-template" aria-label="Link to Step 5 — curl template">#</a></h3>
+<div class="code-block"><div class="code-label"><span>bash</span><button type="button" data-copy-code>Copy</button></div><pre><code>curl -sS -X POST &quot;http://&lt;speaker-ip&gt;/tdkcgi&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --digest -u &quot;admin:&lt;PASSWORD&gt;&quot; \
+  -d @request.json</code></pre></div>
+<hr>
+<h2 id="5-recommended-integration-architecture">5. Recommended integration architecture<a class="heading-anchor" href="#5-recommended-integration-architecture" aria-label="Link to 5. Recommended integration architecture">#</a></h2>
+<div class="code-block"><div class="code-label"><span>text</span><button type="button" data-copy-code>Copy</button></div><pre><code>Monitoring Station / Platform
+        |
+        |  (authorized API / bridge only)
+        v
+  Integration Bridge / Backend
+        |
+        |  Digest + CGI-JSON  (LAN or VPN)
+        v
+     IP Speaker</code></pre></div>
+<p><strong>Do</strong></p>
+<ul><li>Keep Digest credentials on the bridge / backend only</li><li>Log command name, HTTP status, and device <code>error</code> code</li><li>Retry transient network failures; do not retry play blindly without operator intent</li></ul>
+<p><strong>Do not</strong></p>
+<ul><li>Call the speaker Digest API directly from a public web UI</li><li>Hard-code factory sample broker IPs (<code>192.168.5.x</code>) into production</li></ul>
+<hr>
+<h2 id="6-body-style-reminder-important">6. Body style reminder (important)<a class="heading-anchor" href="#6-body-style-reminder-important" aria-label="Link to 6. Body style reminder (important)">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>Feature</th><th>Body style</th></tr></thead><tbody><tr><td>Play / list audio / volume</td><td><strong>envelope</strong></td></tr><tr><td>SIP / MQTT / HTTP URL / schedules</td><td><strong>flat</strong></td></tr></tbody></table></div>
+<p>Using the wrong style often returns <code>error = -1</code>.</p>
+<hr>
+<h2 id="7-common-workflows">7. Common workflows<a class="heading-anchor" href="#7-common-workflows" aria-label="Link to 7. Common workflows">#</a></h2>
+<h3 id="7-1-operator-talk-down-stored-prompt">7.1 Operator talk-down (stored prompt)<a class="heading-anchor" href="#7-1-operator-talk-down-stored-prompt" aria-label="Link to 7.1 Operator talk-down (stored prompt)">#</a></h3>
+<ol><li><code>get.whistle.list</code></li><li><code>set.encode.audio</code> (optional volume)</li><li><code>set.whistle.list</code> with <code>ctrl=0</code></li></ol>
+<p>Best for: monitoring deterrence announcements.</p>
+<h3 id="7-2-live-voice-sip">7.2 Live voice (SIP)<a class="heading-anchor" href="#7-2-live-voice-sip" aria-label="Link to 7.2 Live voice (SIP)">#</a></h3>
+<ol><li>Configure PBX extension with <code>s.network.sip</code></li><li>Set <code>enable=true</code></li><li>Place a SIP call to the speaker extension</li></ol>
+<p>Best for: real-time operator conversation.</p>
+<h3 id="7-3-remote-pa-over-mqtt">7.3 Remote PA over MQTT<a class="heading-anchor" href="#7-3-remote-pa-over-mqtt" aria-label="Link to 7.3 Remote PA over MQTT">#</a></h3>
+<ol><li>Deploy / identify MQTT broker</li><li>Write speaker MQTT client with <code>s.network.mqtt</code> (<code>serverIP</code>, <code>speaker_no</code>, <code>group_no</code>)</li><li>Set <code>enable=1</code></li><li>Publish play/broadcast from the PA platform</li></ol>
+<blockquote><p>CGI MQTT APIs configure the client. End-to-end play also depends on the PA platform’s MQTT topic/payload protocol.</p></blockquote>
+<h3 id="7-4-timed-announcements">7.4 Timed announcements<a class="heading-anchor" href="#7-4-timed-announcements" aria-label="Link to 7.4 Timed announcements">#</a></h3>
+<ol><li>Upload or select an audio file</li><li><code>set.scheduledbroadcast.add</code> with date range + weekday windows</li><li>Verify with <code>get.scheduledbroadcast.all</code></li></ol>
+<hr>
+<h2 id="8-acceptance-checklist-site">8. Acceptance checklist (site)<a class="heading-anchor" href="#8-acceptance-checklist-site" aria-label="Link to 8. Acceptance checklist (site)">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Check</th><th>Pass criteria</th></tr></thead><tbody><tr><td>1</td><td>Reach web UI / <code>get.system.info</code></td><td>HTTP 200, model/FW readable</td></tr><tr><td>2</td><td>List audio files</td><td>At least one playable file</td></tr><tr><td>3</td><td>Play once</td><td>Listener hears announcement</td></tr><tr><td>4</td><td>Change volume + play</td><td>Listener reports clear loudness change</td></tr><tr><td>5</td><td>(Optional) SIP</td><td>Call connects and audio is heard</td></tr><tr><td>6</td><td>(Optional) MQTT</td><td>Client connects; platform broadcast plays</td></tr></tbody></table></div>
+<hr>
+<h2 id="9-troubleshooting">9. Troubleshooting<a class="heading-anchor" href="#9-troubleshooting" aria-label="Link to 9. Troubleshooting">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Action</th></tr></thead><tbody><tr><td>HTTP 401</td><td>Bad Digest credentials</td><td>Verify username/password</td></tr><tr><td><code>error = -1</code></td><td>Wrong body style or unsupported command</td><td>Switch flat ↔ envelope; confirm FW supports IPS APIs</td></tr><tr><td>Play returns 0 but no sound</td><td>Volume too low / wrong file / muted amp</td><td>Check <code>alarmaudiovolume</code>; re-list files; listen on site</td></tr><tr><td>MQTT enable on, no play</td><td>No broker / wrong topic protocol</td><td>Verify broker reachability; confirm PA publish format</td></tr><tr><td>Schedule single get fails</td><td>Empty schedule table</td><td>Expected when no records exist</td></tr></tbody></table></div>
+<hr>
+<h2 id="10-field-notes-from-homaxi-validation">10. Field notes from Homaxi validation<a class="heading-anchor" href="#10-field-notes-from-homaxi-validation" aria-label="Link to 10. Field notes from Homaxi validation">#</a></h2>
+<p>Validated on a LAN IPS unit (<code>IPS05H10-EM</code>):</p>
+<ul><li>Connectivity + system info: <strong>PASS</strong></li><li>MQTT/SIP GET: <strong>PASS</strong> (flat body)</li><li>Multicast / HTTP URL / HTTPS cert GET: <strong>PASS</strong></li><li>Audio encode / whistle list: <strong>PASS</strong></li><li>On-demand play: <strong>PASS</strong> (heard on site)</li><li>Volume set (<code>alarmaudiovolume</code> 5 → 50) + replay: <strong>PASS</strong> (clearly louder)</li></ul>
+<p>These results confirm the <strong>play + volume</strong> path is ready for monitoring integration. SIP/MQTT end-to-end audio still requires the customer’s PBX / broker environment.</p>
+<hr>
+<h2 id="11-related-documents">11. Related documents<a class="heading-anchor" href="#11-related-documents" aria-label="Link to 11. Related documents">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th>Document</th><th>Description</th></tr></thead><tbody><tr><td><a href="/integration/ip-speaker/cgi-json-api-reference/"><code>Homaxi_IP_Speaker_CGI_API_Reference_EN.md</code></a></td><td>Full English API command reference</td></tr><tr><td>Vendor CGI-JSON Protocol VR006</td><td>Complete manufacturer protocol manual</td></tr></tbody></table></div>
+<hr>
+<h2 id="12-support">12. Support<a class="heading-anchor" href="#12-support" aria-label="Link to 12. Support">#</a></h2>
+<p>For Homaxi project integration questions, contact your Homaxi technical representative with:</p>
+<ul><li>Speaker model + firmware (<code>get.system.info</code>)</li><li>MAC / Cloud ID (if provisioned)</li><li>Command name + request/response JSON (passwords redacted)</li><li>Whether the issue is silent GET, play, SIP, or MQTT</li></ul>
+<hr>
+<p><em>Homaxi · IP Speaker Integration Guide · English · v1.0</em></p><nav class="doc-pagination" aria-label="Document navigation"><span></span><a href="/integration/ip-speaker/cgi-json-api-reference/"><small>Next</small>CGI-JSON API Reference →</a></nav></article></main><aside class="page-toc"><p>On this page</p><a class="toc-2" href="#1-purpose">1. Purpose</a><a class="toc-2" href="#2-what-an-ip-speaker-can-do">2. What an IP Speaker can do</a><a class="toc-2" href="#3-prerequisites">3. Prerequisites</a><a class="toc-2" href="#4-quick-start-5-steps">4. Quick start (5 steps)</a><a class="toc-3" href="#step-1-confirm-device-reachability">Step 1 — Confirm device reachability</a><a class="toc-3" href="#step-2-list-announcement-files">Step 2 — List announcement files</a><a class="toc-3" href="#step-3-set-announcement-volume-recommended">Step 3 — Set announcement volume (recommended)</a><a class="toc-3" href="#step-4-play-announcement">Step 4 — Play announcement</a><a class="toc-3" href="#step-5-curl-template">Step 5 — curl template</a><a class="toc-2" href="#5-recommended-integration-architecture">5. Recommended integration architecture</a><a class="toc-2" href="#6-body-style-reminder-important">6. Body style reminder (important)</a><a class="toc-2" href="#7-common-workflows">7. Common workflows</a><a class="toc-3" href="#7-1-operator-talk-down-stored-prompt">7.1 Operator talk-down (stored prompt)</a><a class="toc-3" href="#7-2-live-voice-sip">7.2 Live voice (SIP)</a><a class="toc-3" href="#7-3-remote-pa-over-mqtt">7.3 Remote PA over MQTT</a><a class="toc-3" href="#7-4-timed-announcements">7.4 Timed announcements</a><a class="toc-2" href="#8-acceptance-checklist-site">8. Acceptance checklist (site)</a><a class="toc-2" href="#9-troubleshooting">9. Troubleshooting</a><a class="toc-2" href="#10-field-notes-from-homaxi-validation">10. Field notes from Homaxi validation</a><a class="toc-2" href="#11-related-documents">11. Related documents</a><a class="toc-2" href="#12-support">12. Support</a><a class="toc-top" href="#top">Back to top ↑</a></aside></div><div class="menu-backdrop" data-backdrop></div><script src="/integration/assets/docs.js" defer></script></body></html>
