@@ -36,6 +36,7 @@ button { font: inherit; }
 .sidebar-home:hover, .sidebar-group a:hover { color: var(--ink); background: #eef3f9; }
 .sidebar-home.current, .sidebar-group a.current { color: var(--blue-deep); background: #eaf1ff; font-weight: 700; }
 .sidebar-group { padding-top: 20px; border-top: 1px solid var(--line); }
+.sidebar-contact { margin-top: 22px; }
 .sidebar-group p { margin: 0 12px 10px; color: #7a8798; font-size: .7rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
 .sidebar-note { margin-top: 34px; padding: 18px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
 .sidebar-note strong, .sidebar-note span, .sidebar-note a { display: block; }
@@ -73,6 +74,23 @@ button { font: inherit; }
 .principles article span { color: var(--blue); font-size: .68rem; font-weight: 750; }
 .principles h3 { margin: 42px 0 10px; font-size: 1.05rem; }
 .principles article p { margin: 0; color: var(--muted); font-size: .78rem; }
+
+.contact-page { padding: 88px clamp(40px, 7vw, 110px) 100px; }
+.contact-intro { max-width: 760px; }
+.contact-intro h1 { margin: 0; font-size: clamp(3rem, 6vw, 5.8rem); line-height: .98; letter-spacing: -.055em; }
+.contact-intro > p:last-child { max-width: 650px; margin: 28px 0 0; color: var(--muted); font-size: 1.05rem; }
+.contact-grid { margin-top: 64px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.contact-card { min-height: 280px; padding: 32px; display: block; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fff; }
+.contact-card:hover:is(a) { background: #f9fbff; }
+.contact-primary { grid-column: 1 / -1; min-height: 300px; background: linear-gradient(120deg, #f7faff, #edf4ff); }
+.contact-label { color: var(--blue); font-size: .68rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+.contact-card h2 { margin: 64px 0 14px; font-size: clamp(1.35rem, 2.4vw, 2rem); line-height: 1.2; letter-spacing: -.03em; }
+.contact-primary h2 { margin-top: 72px; font-size: clamp(2rem, 4vw, 3.25rem); }
+.contact-card p, .contact-card address { max-width: 560px; margin: 0 0 24px; color: var(--muted); font-size: .84rem; font-style: normal; }
+.contact-card strong, .map-link { color: var(--blue); font-size: .76rem; font-weight: 750; }
+.contact-note { margin-top: 34px; padding: 24px 0; display: grid; grid-template-columns: .34fr 1fr; gap: 34px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.contact-note span { color: var(--blue); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.contact-note p { max-width: 620px; margin: 0; color: var(--muted); font-size: .78rem; }
 
 .doc-article { width: min(820px, calc(100% - 80px)); margin: 0 auto; padding: 42px 0 100px; }
 .breadcrumbs { display: flex; flex-wrap: wrap; gap: 9px; color: #778497; font-size: .72rem; }
@@ -143,6 +161,12 @@ button { font: inherit; }
   .quick-path { align-items: stretch; }
   .quick-path > span { display: none; }
   .library, .principles { padding: 56px 24px 66px; }
+  .contact-page { padding: 64px 24px 80px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-primary { grid-column: auto; }
+  .contact-card, .contact-primary { min-height: 260px; padding: 27px; }
+  .contact-card h2, .contact-primary h2 { margin-top: 54px; }
+  .contact-note { grid-template-columns: 1fr; gap: 10px; }
   .section-title { align-items: start; flex-direction: column; gap: 14px; }
   .doc-grid, .principles > div { grid-template-columns: 1fr; }
   .doc-card { min-height: 290px; }

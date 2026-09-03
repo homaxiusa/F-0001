@@ -155,20 +155,21 @@ function renderMarkdown(markdown) {
   return { html: output.join("\n"), toc };
 }
 
-const logo = `<a class="brand" href="/integration/" aria-label="Homaxi Integration Hub"><img src="/guard-watch/homaxi-logo.png" alt="Homaxi"><span>Developers</span></a>`;
+const logo = `<a class="brand" href="/integration/" aria-label="Homaxi Integration Hub"><img src="/integration/assets/homaxi-logo.png" alt="Homaxi"><span>Developers</span></a>`;
 
-function header() {
-  return `<header class="topbar">${logo}<nav aria-label="Global navigation"><a class="active" href="/integration/">Documentation</a><a href="/guard-watch/">GuardWatch</a><a href="mailto:sales@homaxi.com">Contact</a></nav><button class="mobile-menu" type="button" data-menu aria-label="Open documentation menu"><span></span><span></span></button></header>`;
+function header(activeSlug) {
+  const contactActive = activeSlug === "contact";
+  return `<header class="topbar">${logo}<nav aria-label="Global navigation"><a class="${contactActive ? "" : "active"}" href="/integration/">Documentation</a><a class="${contactActive ? "active" : ""}" href="/integration/contact/">Contact</a></nav><button class="mobile-menu" type="button" data-menu aria-label="Open documentation menu"><span></span><span></span></button></header>`;
 }
 
 function sidebar(activeSlug = "") {
-  return `<aside class="docs-sidebar" data-sidebar><a class="sidebar-home ${activeSlug === "" ? "current" : ""}" href="/integration/"><span class="home-icon">⌂</span>Documentation home</a><div class="sidebar-group"><p>IP Speaker</p>${docs.map((doc) => `<a class="${activeSlug === doc.slug ? "current" : ""}" href="/integration/${doc.slug}/">${doc.title.replace("IP Speaker ", "")}</a>`).join("")}</div><div class="sidebar-note"><strong>Need integration support?</strong><span>Include the device model, firmware, and a redacted request/response.</span><a href="mailto:sales@homaxi.com">Contact Homaxi →</a></div></aside>`;
+  return `<aside class="docs-sidebar" data-sidebar><a class="sidebar-home ${activeSlug === "" ? "current" : ""}" href="/integration/"><span class="home-icon">⌂</span>Documentation home</a><div class="sidebar-group"><p>IP Speaker</p>${docs.map((doc) => `<a class="${activeSlug === doc.slug ? "current" : ""}" href="/integration/${doc.slug}/">${doc.title.replace("IP Speaker ", "")}</a>`).join("")}</div><div class="sidebar-group sidebar-contact"><p>Support</p><a class="${activeSlug === "contact" ? "current" : ""}" href="/integration/contact/">Contact Homaxi</a></div><div class="sidebar-note"><strong>Need integration support?</strong><span>Include the device model, firmware, and a redacted request/response.</span><a href="/integration/contact/">Contact Homaxi →</a></div></aside>`;
 }
 
 function shell({ title, description, activeSlug = "", main, toc = "" }) {
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)} | Homaxi Developers</title><meta name="description" content="${escapeHtml(description)}"><link rel="canonical" href="https://www.homaxi.us/integration/${activeSlug ? `${activeSlug}/` : ""}"><link rel="icon" href="/guard-watch/favicon.svg"><link rel="stylesheet" href="/integration/assets/docs.css"></head>
-<body>${header()}<div class="docs-frame">${sidebar(activeSlug)}<main class="docs-main">${main}</main>${toc}</div><div class="menu-backdrop" data-backdrop></div><script src="/integration/assets/docs.js" defer></script></body></html>`;
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)} | Homaxi Developers</title><meta name="description" content="${escapeHtml(description)}"><link rel="canonical" href="https://www.homaxi.us/integration/${activeSlug ? `${activeSlug}/` : ""}"><link rel="icon" href="/integration/assets/favicon.svg"><link rel="stylesheet" href="/integration/assets/docs.css"></head>
+<body>${header(activeSlug)}<div class="docs-frame">${sidebar(activeSlug)}<main class="docs-main">${main}</main>${toc}</div><div class="menu-backdrop" data-backdrop></div><script src="/integration/assets/docs.js" defer></script></body></html>`;
 }
 
 function renderIndex() {
@@ -185,10 +186,18 @@ function renderDoc(doc) {
   return shell({ title: doc.title, description: doc.summary, activeSlug: doc.slug, main, toc });
 }
 
+function renderContact() {
+  const main = `<section class="contact-page"><div class="contact-intro"><p class="eyebrow">CONTACT HOMAXI</p><h1>How can we help?</h1><p>For integration questions, technical documentation, or product support, contact the Homaxi team directly.</p></div><div class="contact-grid"><a class="contact-card contact-primary" href="mailto:support@homaxi.com"><span class="contact-label">Technical support</span><h2>support@homaxi.com</h2><p>Send your device model, firmware version, and a redacted request and response when asking about an integration.</p><strong>Email support →</strong></a><a class="contact-card" href="tel:+16269009818"><span class="contact-label">Phone</span><h2>+1 626 900 9818</h2><p>Call Homaxi for product and integration assistance.</p><strong>Call Homaxi →</strong></a><div class="contact-card"><span class="contact-label">Office</span><h2>Homaxi Inc.</h2><address>20653 Lycoming St, Unit A-1<br>Diamond Bar, CA 91789<br>United States</address><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=20653+Lycoming+St%2C+Unit+A-1%2C+Diamond+Bar%2C+CA+91789">View on map →</a></div></div><div class="contact-note"><span>Before contacting support</span><p>Never send passwords, API keys, or unredacted credentials. Include the command name, HTTP status, and device error code when available.</p></div></section>`;
+  return shell({ title: "Contact", description: "Contact Homaxi for product integration, technical documentation, and support.", activeSlug: "contact", main });
+}
+
 fs.writeFileSync(path.join(root, "index.html"), renderIndex());
 for (const doc of docs) {
   const directory = path.join(root, doc.slug);
   fs.mkdirSync(directory, { recursive: true });
   fs.writeFileSync(path.join(directory, "index.html"), renderDoc(doc));
 }
-console.log(`Generated ${docs.length + 1} documentation pages.`);
+const contactDir = path.join(root, "contact");
+fs.mkdirSync(contactDir, { recursive: true });
+fs.writeFileSync(path.join(contactDir, "index.html"), renderContact());
+console.log(`Generated ${docs.length + 2} documentation pages.`);

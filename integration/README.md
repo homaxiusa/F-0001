@@ -6,6 +6,7 @@ Static documentation published at `https://www.homaxi.us/integration/`.
 
 - IP Speaker Integration Guide
 - IP Speaker CGI-JSON API Reference
+- Contact Homaxi
 
 ## Update the site
 
