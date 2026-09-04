@@ -102,7 +102,7 @@ function renderMarkdown(markdown) {
       const label = heading[2].replace(/[`*_]/g, "");
       const id = uniqueId(label);
       if (level >= 2) toc.push({ level, label, id });
-      output.push(`<h${level} id="${id}">${inline(heading[2])}<a class="heading-anchor" href="#${id}" aria-label="Link to ${escapeHtml(label)}">#</a></h${level}>`);
+      output.push(`<h${level} id="${id}">${inline(heading[2])}</h${level}>`);
       i += 1;
       continue;
     }
