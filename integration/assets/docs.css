@@ -28,7 +28,7 @@ button { font: inherit; }
 .mobile-menu { display: none; width: 42px; height: 42px; border: 0; background: transparent; }
 .mobile-menu span { display: block; width: 20px; height: 1px; margin: 6px auto; background: var(--ink); }
 
-.docs-frame { min-height: calc(100vh - var(--header)); display: grid; grid-template-columns: 248px minmax(0, 1fr) 212px; }
+.docs-frame { min-height: calc(100vh - var(--header)); display: grid; grid-template-columns: 248px minmax(0, 1fr) 248px; }
 .docs-sidebar { position: sticky; top: var(--header); height: calc(100vh - var(--header)); padding: 24px 18px; overflow-y: auto; border-right: 1px solid var(--line); background: #fafafa; }
 .sidebar-home, .sidebar-group a { min-height: 40px; padding: 8px 11px; display: flex; align-items: center; border-radius: 5px; color: #555; font-size: .9rem; line-height: 1.35; }
 .sidebar-home { gap: 10px; margin-bottom: 18px; font-weight: 650; }
