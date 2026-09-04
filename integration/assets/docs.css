@@ -7,7 +7,7 @@
   --blue-deep: #123ea5;
   --cyan: #11a8d6;
   --green: #5eb33d;
-  --code: #171717;
+  --code: #f6f7f8;
   --header: 60px;
   color-scheme: light;
 }
@@ -113,11 +113,11 @@ button { font: inherit; }
 .doc-article blockquote::before { content: "i"; position: absolute; left: 15px; top: 16px; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: #333; color: white; font-size: .72rem; font-weight: 800; font-style: italic; }
 .doc-article blockquote p { margin: 0; color: #444; font-size: .94rem; }
 .doc-article code { padding: .12em .36em; border: 1px solid #d7d7d7; border-radius: 3px; background: #f3f3f3; color: #222; font-family: "Fira Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: .86em; }
-.code-block { margin: 20px 0 24px; border: 1px solid #292929; border-radius: 6px; background: var(--code); overflow: hidden; box-shadow: none; }
-.code-label { height: 42px; padding: 0 14px 0 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #26344a; color: #8392a7; font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; }
-.code-label button { padding: 5px 9px; border: 1px solid #35445d; border-radius: 5px; color: #c7d1df; background: transparent; cursor: pointer; font-size: .66rem; text-transform: none; letter-spacing: 0; }
-.code-label button:hover { color: #fff; border-color: #627897; }
-.code-block pre { margin: 0; padding: 18px; overflow-x: auto; color: #eee; line-height: 1.52; }
+.code-block { margin: 20px 0 24px; border: 1px solid #d8dadd; border-radius: 6px; background: var(--code); overflow: hidden; box-shadow: none; }
+.code-label { height: 42px; padding: 0 14px 0 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #dedede; background: #f0f1f2; color: #666; font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; }
+.code-label button { padding: 5px 9px; border: 1px solid #c8c8c8; border-radius: 5px; color: #444; background: #fff; cursor: pointer; font-size: .66rem; text-transform: none; letter-spacing: 0; }
+.code-label button:hover { color: #111; border-color: #999; background: #e8e8e8; }
+.code-block pre { margin: 0; padding: 18px; overflow-x: auto; color: #222; line-height: 1.52; }
 .code-block code { padding: 0; border: 0; background: none; color: inherit; font-size: .84rem; }
 .table-wrap { margin: 20px 0 26px; overflow-x: auto; border: 1px solid var(--line); border-radius: 5px; }
 .doc-article table { width: 100%; border-collapse: collapse; font-size: .88rem; }
